@@ -1,7 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EKNM_Bottleshelf.Models
 {
+    [Table("Cocktails")]
     public class Cocktail
     {
         [Key]
@@ -9,7 +11,7 @@ namespace EKNM_Bottleshelf.Models
         [Required]
         public string Name { get; set; }
         public string? Description { get; set; }
-        public Dictionary<int, double> DryIngrinients { get; set; }
-        public Dictionary<int, double> LiquidIngrinients { get; set; }
+        public string DryIngrinients { get; set; }
+        public string LiquidIngrinients { get; set; }
     }
 }
