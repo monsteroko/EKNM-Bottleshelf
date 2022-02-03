@@ -1,0 +1,78 @@
+<h1>Список cухих компонентов</h1>
+<input type="button" value="Добавить" class="btn btn-default" (click)="addDry()" />
+<table *ngIf="tableMode; else create" class="table table-striped">
+    <thead>
+        <tr>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Описание</td>
+            <td>Кол-во</td>
+            <td>Вес</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of dries">
+            <ng-template [ngIf]="dry?.Id != p.Id" [ngIfElse]="edit">
+                <td>{{p?.Name}}</td>
+                <td>{{p?.Price}}</td>
+                <td>{{p?.Description}}</td>
+                <td>{{p?.Amount}}</td>
+                <td>{{p?.Weight}}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="editDry(p)">Изменить</button>
+                    <button class="btn btn-sm btn-danger" (click)="deleteDry(p)">Удалить</button>
+                </td>
+            </ng-template>
+        </tr>
+    </tbody>
+</table>
+ 
+<ng-template #edit>
+    <td>
+        <input type="text" [(ngModel)]="dry.Name" class="form-control" />
+    </td>
+    <td>
+        <input type="number" [(ngModel)]="dry.Price" class="form-control" />
+    </td>
+    <td>
+        <input type="text" [(ngModel)]="dry.Description" class="form-control" />
+    </td>
+    <td>
+      <input type="number" [(ngModel)]="dry.Amount" class="form-control" />
+  </td>
+  <td>
+    <input type="number" [(ngModel)]="dry.Weight" class="form-control" />
+</td>
+    <td>
+        <input type="button" value="Сохранить" (click)="saveDry()" class="btn btn-sm btn-success" />
+        <input type="button" value="Отмена" (click)="cancelDry()" class="btn btn-sm btn-warning" />
+    </td>
+</ng-template>
+
+<ng-template #create>
+    <div class="form-group">
+        <label>Название</label>
+        <input type="text" [(ngModel)]="dry.Name" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Цена</label>
+        <input type="number" [(ngModel)]="dry.Price" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Описание</label>
+        <input type="text" [(ngModel)]="dry.Description" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Кол-во</label>
+      <input type="number" [(ngModel)]="dry.Amount" class="form-control" />
+  </div>
+  <div class="form-group">
+    <label>Вес</label>
+    <input type="number" [(ngModel)]="dry.Weight" class="form-control" />
+</div>
+    <div>
+        <input type="button" value="Сохранить" (click)="saveDry()" class="btn btn-success" />
+        <input type="button" value="Отмена" (click)="cancelDry()" class="btn btn-warning" />
+    </div>
+</ng-template>
