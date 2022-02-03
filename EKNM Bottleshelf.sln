@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EKNM Bottleshelf", "EKNM Bottleshelf\EKNM Bottleshelf.csproj", "{F2E54159-4C85-465D-985B-5BEB7251DCB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "EKNM_Bottleshelf-Backend\Backend.csproj", "{DF89A029-860A-4BED-BDB6-3913CDFA0D44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F2E54159-4C85-465D-985B-5BEB7251DCB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F2E54159-4C85-465D-985B-5BEB7251DCB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F2E54159-4C85-465D-985B-5BEB7251DCB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F2E54159-4C85-465D-985B-5BEB7251DCB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF89A029-860A-4BED-BDB6-3913CDFA0D44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF89A029-860A-4BED-BDB6-3913CDFA0D44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF89A029-860A-4BED-BDB6-3913CDFA0D44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF89A029-860A-4BED-BDB6-3913CDFA0D44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
