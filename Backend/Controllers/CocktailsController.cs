@@ -20,6 +20,7 @@ namespace EKNM_Bottleshelf.Controllers
                 db.SaveChanges();
             }*/
         }
+        // GET api/Cocktails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cocktail>>> Get()
         {
