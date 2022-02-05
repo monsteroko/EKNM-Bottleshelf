@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EKNM_Bottleshelf.Models
 {
@@ -7,12 +6,12 @@ namespace EKNM_Bottleshelf.Models
     {
         [Key]
         public int Id { get; set; }
-        [Column(TypeName = "text"), Required]
+        [Required]
         public string Name { get; set; }
-        [Column(TypeName = "double precision"), Range(0,double.MaxValue)]
+        [Range(0,double.MaxValue)]
         public double Price { get; set; }
         public string? Description { get; set; }
-        [Column(TypeName = "integer"), Range(0, int.MaxValue)]
+        [Range(0, int.MaxValue)]
         public int Amount { get; set; }
     }
 }

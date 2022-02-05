@@ -1,153 +1,84 @@
-﻿#nullable disable
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EKNM_Bottleshelf.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EKNM_Bottleshelf.Models;
 
 namespace EKNM_Bottleshelf.Controllers
 {
-    public class LiquidsController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class LiquidsController : ControllerBase
     {
-        private readonly ContextBH _context;
-
+        ContextBH db;
         public LiquidsController(ContextBH context)
         {
-            _context = context;
-        }
-
-        // GET: Liquids
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Liquids.ToListAsync());
-        }
-
-        // GET: Liquids/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
+            db = context;
+            if (!db.Liquids.Any())
             {
-                return NotFound();
+                db.Liquids.Add(new Liquid { Name = "Finlandia", Amount = 1, Degree = 40, Description = "Eto dlya Koli", Price = 250, Id = 1, Volume=500 });
+                db.Liquids.Add(new Liquid { Name = "Pivo", Amount = 1, Degree = 8.3, Description = "Nashe Pivko", Price = 28, Id = 2 });
+                db.SaveChanges();
             }
-
-            var liquid = await _context.Liquids
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (liquid == null)
-            {
-                return NotFound();
-            }
-
-            return View(liquid);
         }
-
-        // GET: Liquids/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Liquid>>> Get()
         {
-            return View();
+            return await db.Liquids.ToListAsync();
+        }
+        // GET api/Liquids/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Liquid>> Get(int id)
+        {
+            Liquid component = await db.Liquids.FirstOrDefaultAsync(x => x.Id == id);
+            if (component == null)
+                return NotFound();
+            return new ObjectResult(component);
         }
 
-        // POST: Liquids/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST api/Liquids
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Volume,Degree,Id,Name,Price,Description,Amount")] Liquid liquid)
+        public async Task<ActionResult<Liquid>> Post(Liquid component)
         {
-            if (ModelState.IsValid)
+            if (component == null)
             {
-                _context.Add(liquid);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return BadRequest();
             }
-            return View(liquid);
+
+            db.Liquids.Add(component);
+            await db.SaveChangesAsync();
+            return Ok(component);
         }
 
-        // GET: Liquids/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // PUT api/Liquids/
+        [HttpPut]
+        public async Task<ActionResult<Liquid>> Put(Liquid component)
         {
-            if (id == null)
+            if (component == null)
+            {
+                return BadRequest();
+            }
+            if (!db.Liquids.Any(x => x.Id == component.Id))
             {
                 return NotFound();
             }
 
-            var liquid = await _context.Liquids.FindAsync(id);
-            if (liquid == null)
+            db.Update(component);
+            await db.SaveChangesAsync();
+            return Ok(component);
+        }
+
+        // DELETE api/Liquids/5
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Liquid>> Delete(int id)
+        {
+            Liquid component = db.Liquids.FirstOrDefault(x => x.Id == id);
+            if (component == null)
             {
                 return NotFound();
             }
-            return View(liquid);
-        }
-
-        // POST: Liquids/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Volume,Degree,Id,Name,Price,Description,Amount")] Liquid liquid)
-        {
-            if (id != liquid.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(liquid);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LiquidExists(liquid.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(liquid);
-        }
-
-        // GET: Liquids/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var liquid = await _context.Liquids
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (liquid == null)
-            {
-                return NotFound();
-            }
-
-            return View(liquid);
-        }
-
-        // POST: Liquids/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var liquid = await _context.Liquids.FindAsync(id);
-            _context.Liquids.Remove(liquid);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool LiquidExists(int id)
-        {
-            return _context.Liquids.Any(e => e.Id == id);
+            db.Liquids.Remove(component);
+            await db.SaveChangesAsync();
+            return Ok(component);
         }
     }
 }
