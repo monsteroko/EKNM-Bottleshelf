@@ -8,12 +8,15 @@ namespace EKNM_Bottleshelf.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Column(TypeName = "text"), Required]
         public string Name { get; set; }
-        [Required, Range(0, int.MaxValue)]
+        [Column(TypeName = "integer"), Required, Range(0, int.MaxValue)]
         public int Volume { get; set; }
+        [Column(TypeName = "text")]
         public string? Description { get; set; }
+        [Column(TypeName = "text"), Required]
         public string DryIngrinients { get; set; }
+        [Column(TypeName = "text"), Required]
         public string LiquidIngrinients { get; set; }
     }
 }

@@ -6,7 +6,7 @@ namespace EKNM_Bottleshelf.Models
     [Table("Dries")]
     public class Dry: Ingridient
     {
-        [Range(0,double.MaxValue)]
+        [Column(TypeName = "integer"),Range(0,double.MaxValue)]
         public int? Weight { get; set; }
     }
 }

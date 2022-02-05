@@ -1,85 +1,153 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿#nullable disable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EKNM_Bottleshelf.Models;
 
 namespace EKNM_Bottleshelf.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class DriesController : ControllerBase
+    public class DriesController : Controller
     {
-        ContextBH db;
+        private readonly ContextBH _context;
+
         public DriesController(ContextBH context)
         {
-            db = context;
-            if (!db.Dries.Any())
+            _context = context;
+        }
+
+        // GET: Dries
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Dries.ToListAsync());
+        }
+
+        // GET: Dries/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
-                db.Dries.Add(new Dry {Name="Koritsa", Amount=1, Weight=10, Description="Eto koritsa?", Price=30,Id=1 });
-                db.Dries.Add(new Dry { Name = "Sahar", Amount = 1, Weight = 1000, Description = "Sladkoe", Price = 28, Id=2 });
-                db.SaveChanges();
-            }
-        }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dry>>> Get()
-        {
-            return await db.Dries.ToListAsync();
-        }
-
-        // GET api/Dries/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Dry>> Get(int id)
-        {
-            Dry component = await db.Dries.FirstOrDefaultAsync(x => x.Id == id);
-            if (component == null)
                 return NotFound();
-            return new ObjectResult(component);
+            }
+
+            var dry = await _context.Dries
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (dry == null)
+            {
+                return NotFound();
+            }
+
+            return View(dry);
         }
 
-        // POST api/Dries
+        // GET: Dries/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Dries/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<ActionResult<Dry>> Post(Dry component)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Weight,Id,Name,Price,Description,Amount")] Dry dry)
         {
-            if (component == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                _context.Add(dry);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            db.Dries.Add(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            return View(dry);
         }
 
-        // PUT api/Dries/
-        [HttpPut]
-        public async Task<ActionResult<Dry>> Put(Dry component)
+        // GET: Dries/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (component == null)
-            {
-                return BadRequest();
-            }
-            if (!db.Dries.Any(x => x.Id == component.Id))
+            if (id == null)
             {
                 return NotFound();
             }
 
-            db.Update(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
-        }
-
-        // DELETE api/Dries/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Dry>> Delete(int id)
-        {
-            Dry component = db.Dries.FirstOrDefault(x => x.Id == id);
-            if (component == null)
+            var dry = await _context.Dries.FindAsync(id);
+            if (dry == null)
             {
                 return NotFound();
             }
-            db.Dries.Remove(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            return View(dry);
+        }
+
+        // POST: Dries/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Weight,Id,Name,Price,Description,Amount")] Dry dry)
+        {
+            if (id != dry.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(dry);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!DryExists(dry.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(dry);
+        }
+
+        // GET: Dries/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var dry = await _context.Dries
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (dry == null)
+            {
+                return NotFound();
+            }
+
+            return View(dry);
+        }
+
+        // POST: Dries/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var dry = await _context.Dries.FindAsync(id);
+            _context.Dries.Remove(dry);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool DryExists(int id)
+        {
+            return _context.Dries.Any(e => e.Id == id);
         }
     }
 }

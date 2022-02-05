@@ -1,85 +1,153 @@
-﻿using EKNM_Bottleshelf.Models;
-using Microsoft.AspNetCore.Http;
+﻿#nullable disable
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using EKNM_Bottleshelf.Models;
 
 namespace EKNM_Bottleshelf.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CocktailsController : ControllerBase
+    public class CocktailsController : Controller
     {
-        ContextBH db;
+        private readonly ContextBH _context;
+
         public CocktailsController(ContextBH context)
         {
-            db = context;
-            /*if (!db.Cocktails.Any())
+            _context = context;
+        }
+
+        // GET: Cocktails
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Cocktails.ToListAsync());
+        }
+
+        // GET: Cocktails/Details/5
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
             {
-                db.Cocktails.Add(new Cocktail { Name = "Koritsa", Amount = 1, Weight = 10, Description = "Eto koritsa?", Price = 30, Id = 1 });
-                db.Cocktails.Add(new Cocktail { Name = "Sahar", Amount = 1, Weight = 1000, Description = "Sladkoe", Price = 28, Id = 2 });
-                db.SaveChanges();
-            }*/
-        }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cocktail>>> Get()
-        {
-            return await db.Cocktails.ToListAsync();
-        }
-
-        // GET api/Cocktails/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Cocktail>> Get(int id)
-        {
-            Cocktail component = await db.Cocktails.FirstOrDefaultAsync(x => x.Id == id);
-            if (component == null)
                 return NotFound();
-            return new ObjectResult(component);
+            }
+
+            var cocktail = await _context.Cocktails
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cocktail == null)
+            {
+                return NotFound();
+            }
+
+            return View(cocktail);
         }
 
-        // POST api/Cocktails
+        // GET: Cocktails/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Cocktails/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public async Task<ActionResult<Cocktail>> Post(Cocktail component)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Volume,Description,DryIngrinients,LiquidIngrinients")] Cocktail cocktail)
         {
-            if (component == null)
+            if (ModelState.IsValid)
             {
-                return BadRequest();
+                _context.Add(cocktail);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            db.Cocktails.Add(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            return View(cocktail);
         }
 
-        // PUT api/Cocktails/
-        [HttpPut]
-        public async Task<ActionResult<Cocktail>> Put(Cocktail component)
+        // GET: Cocktails/Edit/5
+        public async Task<IActionResult> Edit(int? id)
         {
-            if (component == null)
-            {
-                return BadRequest();
-            }
-            if (!db.Cocktails.Any(x => x.Id == component.Id))
+            if (id == null)
             {
                 return NotFound();
             }
 
-            db.Update(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
-        }
-
-        // DELETE api/Cocktails/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Cocktail>> Delete(int id)
-        {
-            Cocktail component = db.Cocktails.FirstOrDefault(x => x.Id == id);
-            if (component == null)
+            var cocktail = await _context.Cocktails.FindAsync(id);
+            if (cocktail == null)
             {
                 return NotFound();
             }
-            db.Cocktails.Remove(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            return View(cocktail);
+        }
+
+        // POST: Cocktails/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Volume,Description,DryIngrinients,LiquidIngrinients")] Cocktail cocktail)
+        {
+            if (id != cocktail.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(cocktail);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!CocktailExists(cocktail.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(cocktail);
+        }
+
+        // GET: Cocktails/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var cocktail = await _context.Cocktails
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (cocktail == null)
+            {
+                return NotFound();
+            }
+
+            return View(cocktail);
+        }
+
+        // POST: Cocktails/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cocktail = await _context.Cocktails.FindAsync(id);
+            _context.Cocktails.Remove(cocktail);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool CocktailExists(int id)
+        {
+            return _context.Cocktails.Any(e => e.Id == id);
         }
     }
 }
