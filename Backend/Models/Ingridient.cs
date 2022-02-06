@@ -6,6 +6,7 @@ namespace EKNM_Bottleshelf.Models
     public abstract class Ingridient
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column(TypeName = "text"), Required]
         public string Name { get; set; }

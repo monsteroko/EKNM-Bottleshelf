@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EKNM_Bottleshelf.Migrations
 {
     [DbContext(typeof(ContextBH))]
-    [Migration("20220131215546_Initial")]
+    [Migration("20220206173753_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,19 +35,11 @@ namespace EKNM_Bottleshelf.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("text");
 
-                    b.Property<string>("DryIngrinients")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("LiquidIngrinients")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Volume")
+                    b.Property<int>("VolumeML")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -82,6 +74,50 @@ namespace EKNM_Bottleshelf.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dries");
+                });
+
+            modelBuilder.Entity("EKNM_Bottleshelf.Models.DryList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CockId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DryList");
+                });
+
+            modelBuilder.Entity("EKNM_Bottleshelf.Models.LiqList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CockId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LiqId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LiqList");
                 });
 
             modelBuilder.Entity("EKNM_Bottleshelf.Models.Liquid", b =>

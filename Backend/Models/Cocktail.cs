@@ -7,6 +7,7 @@ namespace EKNM_Bottleshelf.Models
     public class Cocktail
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Column(TypeName = "text"), Required]
         public string Name { get; set; }

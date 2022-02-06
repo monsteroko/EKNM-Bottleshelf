@@ -13,13 +13,10 @@ namespace EKNM_Bottleshelf.Controllers
         public CocktailsController(ContextBH context)
         {
             db = context;
-            /*if (!db.Cocktails.Any())
-            {
-                db.Cocktails.Add(new Cocktail { Name = "Koritsa", Amount = 1, Weight = 10, Description = "Eto koritsa?", Price = 30, Id = 1 });
-                db.Cocktails.Add(new Cocktail { Name = "Sahar", Amount = 1, Weight = 1000, Description = "Sladkoe", Price = 28, Id = 2 });
-                db.SaveChanges();
-            }*/
+            AddInitCocktails();
         }
+
+        // Get all cocktails
         // GET api/Cocktails
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Cocktail>>> Get()
@@ -27,6 +24,7 @@ namespace EKNM_Bottleshelf.Controllers
             return await db.Cocktails.ToListAsync();
         }
 
+        // Get one cocktail
         // GET api/Cocktails/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Cocktail>> Get(int id)
@@ -37,6 +35,7 @@ namespace EKNM_Bottleshelf.Controllers
             return new ObjectResult(component);
         }
 
+        // Add cocktail
         // POST api/Cocktails
         [HttpPost]
         public async Task<ActionResult<Cocktail>> Post(Cocktail component)
@@ -51,6 +50,7 @@ namespace EKNM_Bottleshelf.Controllers
             return Ok(component);
         }
 
+        //Update cocktail
         // PUT api/Cocktails/
         [HttpPut]
         public async Task<ActionResult<Cocktail>> Put(Cocktail component)
@@ -69,6 +69,7 @@ namespace EKNM_Bottleshelf.Controllers
             return Ok(component);
         }
 
+        // Delete coctail
         // DELETE api/Cocktails/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Cocktail>> Delete(int id)
@@ -81,6 +82,20 @@ namespace EKNM_Bottleshelf.Controllers
             db.Cocktails.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);
+        }
+
+        //Add list of coctails (TEST FEATURE)
+        public void AddInitCocktails()
+        {
+            if (!db.Cocktails.Any())
+            {
+                db.Cocktails.Add(new Cocktail { Name = "Чесночный дрифт", Description = "Шот, пить залпом, чеснок по вкусу", VolumeML= 50 });
+                db.Cocktails.Add(new Cocktail { Name = "Супер лонг", Description = "Супер лонг, пить не спеша, тиктак желательно не мятный", VolumeML = 500 });
+                db.Cocktails.Add(new Cocktail { Name = "Аперона", Description = "Лонг, пить не спеша, подавать с колотым льдом", VolumeML = 200 });
+                db.Cocktails.Add(new Cocktail { Name = "Грибок", Description = "Шот, пить залпом, смешивание Rainbow", VolumeML = 50 });
+                db.Cocktails.Add(new Cocktail { Name = "Жемчуг пролетария", Description = "Шот, пить залпом, предпочтительно с ягодами и горохом, возможны замены", VolumeML = 50 });
+                db.SaveChanges();
+            }
         }
     }
 }

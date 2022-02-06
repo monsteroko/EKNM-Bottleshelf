@@ -13,19 +13,18 @@ namespace EKNM_Bottleshelf.Controllers
         public DriesController(ContextBH context)
         {
             db = context;
-            if (!db.Dries.Any())
-            {
-                db.Dries.Add(new Dry {Name="Koritsa", Amount=1, Weight=10, Description="Eto koritsa?", Price=30,Id=1 });
-                db.Dries.Add(new Dry { Name = "Sahar", Amount = 1, Weight = 1000, Description = "Sladkoe", Price = 28, Id=2 });
-                db.SaveChanges();
-            }
+            AddInitDries();
         }
+
+        // Get list of all dries
+        // GET api/Dries
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Dry>>> Get()
         {
             return await db.Dries.ToListAsync();
         }
 
+        // Get dry component
         // GET api/Dries/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Dry>> Get(int id)
@@ -36,6 +35,7 @@ namespace EKNM_Bottleshelf.Controllers
             return new ObjectResult(component);
         }
 
+        // Add dry
         // POST api/Dries
         [HttpPost]
         public async Task<ActionResult<Dry>> Post(Dry component)
@@ -50,6 +50,7 @@ namespace EKNM_Bottleshelf.Controllers
             return Ok(component);
         }
 
+        // Update dry component
         // PUT api/Dries/
         [HttpPut]
         public async Task<ActionResult<Dry>> Put(Dry component)
@@ -68,6 +69,7 @@ namespace EKNM_Bottleshelf.Controllers
             return Ok(component);
         }
 
+        // Delete dry component
         // DELETE api/Dries/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<Dry>> Delete(int id)
@@ -80,6 +82,20 @@ namespace EKNM_Bottleshelf.Controllers
             db.Dries.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);
+        }
+
+
+        //Add list of dries (TEST FEATURE)
+        public void AddInitDries()
+        {
+            if (!db.Dries.Any())
+            {
+                db.Dries.Add(new Dry { Name = "Garlic", Amount = 3, Description = "Just garlic", Price = 10, Weight = 3});
+                db.Dries.Add(new Dry { Name = "Tic Tac", Amount = 1, Description = "With minions", Price = 16.2, Weight = 16 });
+                db.Dries.Add(new Dry { Name = "Canned Peas", Amount = 1, Description = "Bonduelle", Price = 56, Weight = 425 });
+                db.Dries.Add(new Dry { Name = "Burger bun", Amount = 1, Description = "Hello McDonalds", Price = 46.62, Weight = 300 });
+                db.SaveChanges();
+            }
         }
     }
 }

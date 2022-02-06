@@ -16,10 +16,8 @@ namespace EKNM_Bottleshelf.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Volume = table.Column<int>(type: "integer", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    DryIngrinients = table.Column<string>(type: "text", nullable: false),
-                    LiquidIngrinients = table.Column<string>(type: "text", nullable: false)
+                    VolumeML = table.Column<int>(type: "integer", nullable: false),
+                    Description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,6 +39,36 @@ namespace EKNM_Bottleshelf.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Dries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DryList",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CockId = table.Column<int>(type: "integer", nullable: false),
+                    DryId = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DryList", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LiqList",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CockId = table.Column<int>(type: "integer", nullable: false),
+                    LiqId = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LiqList", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,6 +97,12 @@ namespace EKNM_Bottleshelf.Migrations
 
             migrationBuilder.DropTable(
                 name: "Dries");
+
+            migrationBuilder.DropTable(
+                name: "DryList");
+
+            migrationBuilder.DropTable(
+                name: "LiqList");
 
             migrationBuilder.DropTable(
                 name: "Liquids");
