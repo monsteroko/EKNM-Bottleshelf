@@ -42,7 +42,7 @@ namespace EKNM_Bottleshelf.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DryList",
+                name: "DriesTable",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -53,22 +53,7 @@ namespace EKNM_Bottleshelf.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DryList", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "LiqList",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    CockId = table.Column<int>(type: "integer", nullable: false),
-                    LiqId = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_LiqList", x => x.Id);
+                    table.PrimaryKey("PK_DriesTable", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -88,6 +73,21 @@ namespace EKNM_Bottleshelf.Migrations
                 {
                     table.PrimaryKey("PK_Liquids", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "LiquidsTable",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CockId = table.Column<int>(type: "integer", nullable: false),
+                    LiqId = table.Column<int>(type: "integer", nullable: false),
+                    Amount = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LiquidsTable", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -99,13 +99,13 @@ namespace EKNM_Bottleshelf.Migrations
                 name: "Dries");
 
             migrationBuilder.DropTable(
-                name: "DryList");
-
-            migrationBuilder.DropTable(
-                name: "LiqList");
+                name: "DriesTable");
 
             migrationBuilder.DropTable(
                 name: "Liquids");
+
+            migrationBuilder.DropTable(
+                name: "LiquidsTable");
         }
     }
 }

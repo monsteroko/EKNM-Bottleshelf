@@ -6,8 +6,8 @@ namespace EKNM_Bottleshelf.Models
         public DbSet<Liquid> Liquids { get; set; }
         public DbSet<Dry> Dries { get; set; }
         public DbSet<Cocktail> Cocktails { get; set; }
-        public DbSet<DryList> DryList { get; set; }
-        public DbSet<LiqList> LiqList { get; set; }
+        public DbSet<DriesTable> DriesTable { get; set; }
+        public DbSet<LiquidsTable> LiquidsTable { get; set; }
         public void ApplicationContext()
         {
             Database.EnsureCreated();

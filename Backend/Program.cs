@@ -1,21 +1,46 @@
-using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Hosting;
+using EKNM_Bottleshelf.Models;
+using Microsoft.EntityFrameworkCore;
 
+var myAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-namespace EKNM_Bottleshelf
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+builder.Services.AddControllers();
+// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+builder.Services.AddDbContext<ContextBH>();
+
+// Enable CORS
+builder.Services.AddCors(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
+    options.AddPolicy(name: myAllowSpecificOrigins,
+        builder =>
         {
-            CreateHostBuilder(args).Build().Run();
-        }
+            builder.WithOrigins("http://localhost:4200")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+        });
+});
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+app.UseHttpsRedirection();
+
+app.UseCors(myAllowSpecificOrigins);
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Run();

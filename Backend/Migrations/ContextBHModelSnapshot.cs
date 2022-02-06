@@ -45,6 +45,28 @@ namespace EKNM_Bottleshelf.Migrations
                     b.ToTable("Cocktails");
                 });
 
+            modelBuilder.Entity("EKNM_Bottleshelf.Models.DriesTable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CockId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DryId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DriesTable");
+                });
+
             modelBuilder.Entity("EKNM_Bottleshelf.Models.Dry", b =>
                 {
                     b.Property<int>("Id")
@@ -72,50 +94,6 @@ namespace EKNM_Bottleshelf.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Dries");
-                });
-
-            modelBuilder.Entity("EKNM_Bottleshelf.Models.DryList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CockId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("DryId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DryList");
-                });
-
-            modelBuilder.Entity("EKNM_Bottleshelf.Models.LiqList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("CockId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("LiqId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("LiqList");
                 });
 
             modelBuilder.Entity("EKNM_Bottleshelf.Models.Liquid", b =>
@@ -148,6 +126,28 @@ namespace EKNM_Bottleshelf.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Liquids");
+                });
+
+            modelBuilder.Entity("EKNM_Bottleshelf.Models.LiquidsTable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("CockId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("LiqId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LiquidsTable");
                 });
 #pragma warning restore 612, 618
         }
