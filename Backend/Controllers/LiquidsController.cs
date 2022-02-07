@@ -52,7 +52,7 @@ namespace EKNM_Bottleshelf.Controllers
 
         // Update liquid component
         // PUT api/Liquids/
-        [HttpPut]
+        [HttpPut("{id}")]
         public async Task<ActionResult<Liquid>> Put(Liquid component)
         {
             if (component == null)
