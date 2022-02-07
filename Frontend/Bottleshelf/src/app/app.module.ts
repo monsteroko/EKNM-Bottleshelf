@@ -13,6 +13,9 @@ import { LiquidComponent } from './liquid/liquid.component';
 import { ShowLiquidsComponent } from './liquid/show-liquids/show-liquids.component';
 import { AddEditLiquidsComponent } from './liquid/add-edit-liquids/add-edit-liquids.component';
 import { LiquidApiService } from './liquid-api.service';
+import { CocktailComponent } from './cocktail/cocktail.component';
+import { ShowCocktailsComponent } from './cocktail/show-cocktails/show-cocktails.component';
+import { AddEditCocktailsComponent } from './cocktail/add-edit-cocktails/add-edit-cocktails.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { LiquidApiService } from './liquid-api.service';
     AddEditDriesComponent,
     LiquidComponent,
     ShowLiquidsComponent,
-    AddEditLiquidsComponent
+    AddEditLiquidsComponent,
+    CocktailComponent,
+    ShowCocktailsComponent,
+    AddEditCocktailsComponent
   ],
   imports: [
     BrowserModule,

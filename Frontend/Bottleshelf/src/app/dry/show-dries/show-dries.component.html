@@ -2,21 +2,21 @@
     <h1 class="display-7 fw-bold text-white"> Dry ingridients </h1>
     <table class="table table-hover table-dark">
         <thead>
-            <th>Id</th>
             <th>Name</th>
             <th>Price</th>
             <th>Description</th>
             <th>Amount</th>
             <th>Weight</th>
+            <th>Total</th>
         </thead>
         <tbody *ngFor="let item of driesList">
             <tr>
-                <th scope="row">{{item.id}}</th>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.amount}}</td>
                 <td>{{item.weight}}</td>
+                <td>{{item.weight*item.amount}}</td>
             </tr>
         </tbody>
     </table>
