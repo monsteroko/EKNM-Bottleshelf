@@ -78,7 +78,7 @@ namespace EKNM_Bottleshelf.Controllers
         {
             if (!db.DriesTable.Any())
             {
-                db.DriesTable.Add(new DriesTable { CockId = 1, DryId = 1, Amount = 1});
+                db.DriesTable.Add(new DriesTable { CockId = 1, DryId = 1, Amount = 1 });
                 db.DriesTable.Add(new DriesTable { CockId = 2, DryId = 2, Amount = 1 });
                 db.DriesTable.Add(new DriesTable { CockId = 4, DryId = 4, Amount = 1 });
                 db.DriesTable.Add(new DriesTable { CockId = 5, DryId = 3, Amount = 1 });

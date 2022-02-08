@@ -1,4 +1,32 @@
 <form>
+    <div class="mb-3" *ngIf="dry.id!=0">
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control " [(ngModel)]="id" name="id" readonly>
+    </div>
     <div class="mb-3">
         <label class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="name" name="name">
     </div>
+    <div class="mb-3">
+        <label class="form-label">Price</label>
+        <input type="number" class="form-control" [(ngModel)]="price" name="price">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-control" [(ngModel)]="amount" name="amount">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Volume</label>
+        <input type="number" class="form-control" [(ngModel)]="weight" name="volume">
+    </div>
+    <button (click)="addDry()" *ngIf="dry.id==0" class="btn btn-primary">
+        Add
+    </button>
+    <button (click)="updateDry()" *ngIf="dry.id!=0" class="btn btn-primary">
+        Update
+    </button>
+</form>
