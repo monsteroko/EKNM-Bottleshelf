@@ -26,4 +26,5 @@ export class LiquidApiService {
   deleteLiquid(id:number){
     return this.http.delete(this.APIUrl+`/liquids/${id}`);
   }
+
 }

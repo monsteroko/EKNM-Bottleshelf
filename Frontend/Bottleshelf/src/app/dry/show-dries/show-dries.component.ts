@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { DryApiService } from 'src/app/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 

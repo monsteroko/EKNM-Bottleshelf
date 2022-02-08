@@ -1,0 +1,46 @@
+<form>
+    <div class="mb-3" *ngIf="cocktail.id!=0">
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control " [(ngModel)]="id" name="id" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="name" name="name" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Volume (in ML)</label>
+        <input type="number" class="form-control" [(ngModel)]="volumeML" name="volumeML" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Liquid components</label>
+        <table class="table table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Amount (in ml)</th>
+            </thead>
+            <tbody *ngFor="let item of liquidsTable">
+                <tr>
+                    <td>{{item.liqId}}</td>
+                    <td>{{item.amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <label class="form-label">Dry components</label>
+        <table class="table table-hover ">
+            <thead>
+                <th>Name</th>
+                <th>Amount (in gr)</th>
+            </thead>
+            <tbody *ngFor="let item of driesTable">
+                <tr>
+                    <td>{{item.dryId}}</td>
+                    <td>{{item.amount}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</form>

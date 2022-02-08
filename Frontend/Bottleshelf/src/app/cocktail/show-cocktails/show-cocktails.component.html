@@ -1,1 +1,39 @@
-<p>show-cocktails works!</p>
+<div class="bg-dark px-4 pt-5 my-5 text-center align-items-center rounded-3 border shadow-lg">
+    <h1 class="display-7 fw-bold text-white"> Cocktails </h1>
+    <br>
+    <table class="table table-hover table-dark">
+        <thead>
+            <th>Name</th>
+            <th>Volume</th>
+            <th>Description</th>
+            <th>Options</th>
+        </thead>
+        <tbody *ngFor="let item of cocktailsList">
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.volumeML}}</td>
+                <td>{{item.description}}</td>
+                <td>
+                    <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
+                       Details
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- Cocktail details Modal -->
+<div class="modal fade" id="detailsCocktail" tabindex="-1" aria-labelledby="detailsLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="detailsCoctailLabel">{{modalTitle}}</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="modalClose()" id="add-edit-modal-close"></button>
+        </div>
+        <div class="modal-body">
+        <app-cocktail-details [cocktail]="cocktail" *ngIf="activateCocktailDetailsComponent"></app-cocktail-details>
+        </div>
+    </div>
+</div>
+</div>
