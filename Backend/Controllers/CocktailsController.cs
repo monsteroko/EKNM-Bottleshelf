@@ -35,6 +35,38 @@ namespace EKNM_Bottleshelf.Controllers
             return new ObjectResult(component);
         }
 
+        // Get one cocktail
+        // GET api/Cocktails/5/recipe
+        [HttpGet("{id}/recipe")]
+        public async Task<List<RecipeDTO>> GetRecipe(int id)
+        {
+            List<RecipeDTO> recipes = new List<RecipeDTO>();
+            List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            allDries.ForEach(ingridient => {
+                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+
+                recipes.Add(new RecipeDTO
+                {
+                    Name = dryIngridient?.Name,
+                    Amount = ingridient.Amount,
+                    IsSolid = true
+                });
+                });
+            allLiquids.ForEach(ingridient => {
+                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+
+                recipes.Add(new RecipeDTO
+                {
+                    Name = liquidIngridient?.Name,
+                    Amount = ingridient.Amount,
+                    IsSolid = false
+                });
+            });
+            return recipes;
+        }
+
+
         // Add cocktail
         // POST api/Cocktails
         [HttpPost]
@@ -51,8 +83,8 @@ namespace EKNM_Bottleshelf.Controllers
         }
 
         //Update cocktail
-        // PUT api/Cocktails/
-        [HttpPut]
+        // PUT api/Cocktails/5
+        [HttpPut("{id}")]
         public async Task<ActionResult<Cocktail>> Put(Cocktail component)
         {
             if (component == null)

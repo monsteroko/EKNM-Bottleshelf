@@ -23,23 +23,6 @@ namespace EKNM_Bottleshelf.Controllers
             return await db.LiquidsTable.ToListAsync();
         }
 
-        // Request to get coctail liquids (cocktail 5 for example)
-        // GET api/LiquidsTable/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<LiquidsTable>>> Get(int id)
-        {
-            List<LiquidsTable> allcomponents = await db.LiquidsTable.ToListAsync();
-            if (allcomponents == null)
-                return NotFound();
-            List<LiquidsTable> coctailLiquids = new List<LiquidsTable>();
-            foreach (LiquidsTable liquid in allcomponents)
-            {
-                if (liquid.CockId == id)
-                    coctailLiquids.Add(liquid);
-            }
-            return new ObjectResult(coctailLiquids);
-        }
-
         //Request to add cocktail liquid
         // POST api/LiquidsTable
         [HttpPost]

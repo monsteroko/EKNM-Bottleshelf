@@ -24,23 +24,6 @@ namespace EKNM_Bottleshelf.Controllers
             return await db.DriesTable.ToListAsync();
         }
 
-        // Request to get coctail dries (cocktail 5 for example)
-        // GET api/DriesTable/5 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<DriesTable>>> Get(int id)
-        {
-            List<DriesTable> allcomponents = await db.DriesTable.ToListAsync();
-            if (allcomponents == null)
-                return NotFound();
-            List<DriesTable> coctailDries = new List<DriesTable>();
-            foreach(DriesTable dry in allcomponents)
-            {
-                if(dry.CockId == id)
-                    coctailDries.Add(dry);
-            }
-            return new ObjectResult(coctailDries);
-        }
-
         //Request to add cocktail dry
         // POST api/DriesTable
         [HttpPost]
