@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CocktailApiService } from 'src/app/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
-import { DryTableModel } from 'src/models/drytable.model';
-import { LiqTableModel } from 'src/models/liqtable.model';
+import { IngridientModel } from 'src/models/ingridient.model';
 
 @Component({
   selector: 'app-cocktail-details',
@@ -12,8 +11,7 @@ import { LiqTableModel } from 'src/models/liqtable.model';
 export class CocktailDetailsComponent implements OnInit {
 
   cocktailsList = [] as CocktailModel[];
-  driesTable = [] as DryTableModel[];
-  liquidsTable = [] as LiqTableModel[];
+  ingridientsTable = [] as IngridientModel[];
   constructor(private service:CocktailApiService) { }
 
   @Input() cocktail:any;
@@ -21,18 +19,19 @@ export class CocktailDetailsComponent implements OnInit {
   name: string = "";
   volumeML:number = 0;
   description:string = "";
+  price:number = 0;
   ngOnInit(): void {
     this.id = this.cocktail.id;
     this.name = this.cocktail.name;
     this.volumeML = this.cocktail.volumeML;
     this.description = this.cocktail.description;
-    this.service.getDriesTable(this.id).toPromise().then(data => { 
+    this.service.getIngridients(this.id).toPromise().then(data => { 
       if (data)
-      this.driesTable = data;
+      this.ingridientsTable = data;
     });
-    this.service.getLiquidsTable(this.id).toPromise().then(data => { 
+    this.service.getPrice(this.id).toPromise().then(data => { 
       if (data)
-      this.liquidsTable = data;
+      this.price = data;
     });
   }
 

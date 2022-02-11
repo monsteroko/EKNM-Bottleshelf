@@ -13,7 +13,6 @@ namespace EKNM_Bottleshelf.Controllers
         public CocktailsController(ContextBH context)
         {
             db = context;
-            AddInitCocktails();
         }
 
         // Get all cocktails
@@ -66,6 +65,39 @@ namespace EKNM_Bottleshelf.Controllers
             return recipes;
         }
 
+        // Get one cocktail
+        // GET api/Cocktails/5/recipe
+        [HttpGet("{id}/price")]
+        public async Task<double> GetPrice(int id)
+        {
+            double price = 0;
+            List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            allDries.ForEach(ingridient => {
+                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+                if (dryIngridient.Weight != null)
+                {
+                    price += dryIngridient.Price / (double)dryIngridient.Weight * ingridient.Amount;
+                }
+                else
+                {
+                    price += dryIngridient.Price * ingridient.Amount;
+                }
+            });
+            allLiquids.ForEach(ingridient => {
+                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                if (liquidIngridient.Volume != 0)
+                {
+                    price += liquidIngridient.Price / (double)liquidIngridient.Volume * ingridient.Amount;
+                }
+                else
+                {
+                    price += liquidIngridient.Price * ingridient.Amount;
+                }
+            });
+            return Math.Round(price,2);
+        }
+
 
         // Add cocktail
         // POST api/Cocktails
@@ -114,20 +146,6 @@ namespace EKNM_Bottleshelf.Controllers
             db.Cocktails.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);
-        }
-
-        //Add list of coctails (TEST FEATURE)
-        public void AddInitCocktails()
-        {
-            if (!db.Cocktails.Any())
-            {
-                db.Cocktails.Add(new Cocktail { Name = "Чесночный дрифт", Description = "Шот, пить залпом, чеснок по вкусу", VolumeML= 50 });
-                db.Cocktails.Add(new Cocktail { Name = "Супер лонг", Description = "Супер лонг, пить не спеша, тиктак желательно не мятный", VolumeML = 500 });
-                db.Cocktails.Add(new Cocktail { Name = "Аперона", Description = "Лонг, пить не спеша, подавать с колотым льдом", VolumeML = 200 });
-                db.Cocktails.Add(new Cocktail { Name = "Грибок", Description = "Шот, пить залпом, смешивание Rainbow", VolumeML = 50 });
-                db.Cocktails.Add(new Cocktail { Name = "Жемчуг пролетария", Description = "Шот, пить залпом, предпочтительно с ягодами и горохом, возможны замены", VolumeML = 50 });
-                db.SaveChanges();
-            }
         }
     }
 }

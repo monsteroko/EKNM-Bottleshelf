@@ -16,29 +16,24 @@
         <input type="text" class="form-control" [(ngModel)]="description" name="description" readonly>
     </div>
     <div class="mb-3">
-        <label class="form-label">Liquid components</label>
+        <label class="form-label">Price</label>
+        <input type="number" class="form-control" [(ngModel)]="price" name="price" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ingridients</label>
         <table class="table table-hover">
             <thead>
                 <th>Name</th>
-                <th>Amount (in ml)</th>
+                <th>Amount</th>
+                <th>Type</th>
             </thead>
-            <tbody *ngFor="let item of liquidsTable">
+            <tbody *ngFor="let item of ingridientsTable" >
                 <tr>
-                    <td>{{item.liqId}}</td>
-                    <td>{{item.amount}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <label class="form-label">Dry components</label>
-        <table class="table table-hover ">
-            <thead>
-                <th>Name</th>
-                <th>Amount (in gr)</th>
-            </thead>
-            <tbody *ngFor="let item of driesTable">
-                <tr>
-                    <td>{{item.dryId}}</td>
-                    <td>{{item.amount}}</td>
+                    <td >{{item.name}}</td>
+                    <td *ngIf="item.isSolid">{{item.amount}} gr</td>
+                    <td  *ngIf="!item.isSolid">{{item.amount}} ml</td>
+                    <td  *ngIf="item.isSolid">Dry</td>
+                    <td  *ngIf="!item.isSolid">Liquid</td>
                 </tr>
             </tbody>
         </table>

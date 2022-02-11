@@ -13,7 +13,6 @@ namespace EKNM_Bottleshelf.Controllers
         public DriesController(ContextBH context)
         {
             db = context;
-            AddInitDries();
         }
 
         // Get list of all dries
@@ -82,20 +81,6 @@ namespace EKNM_Bottleshelf.Controllers
             db.Dries.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);
-        }
-
-
-        //Add list of dries (TEST FEATURE)
-        public void AddInitDries()
-        {
-            if (!db.Dries.Any())
-            {
-                db.Dries.Add(new Dry { Name = "Garlic", Amount = 3, Description = "Just garlic", Price = 10, Weight = 3});
-                db.Dries.Add(new Dry { Name = "Tic Tac", Amount = 1, Description = "With minions", Price = 16.2, Weight = 16 });
-                db.Dries.Add(new Dry { Name = "Canned Peas", Amount = 1, Description = "Bonduelle", Price = 56, Weight = 425 });
-                db.Dries.Add(new Dry { Name = "Burger bun", Amount = 1, Description = "Hello McDonalds", Price = 46.62, Weight = 300 });
-                db.SaveChanges();
-            }
         }
     }
 }

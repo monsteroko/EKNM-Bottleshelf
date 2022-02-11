@@ -13,7 +13,6 @@ namespace EKNM_Bottleshelf.Controllers
         public DriesTableController(ContextBH context)
         {
             db = context;
-            AddInitDriesTable();
         }
 
         // Request to dries for all cocktails
@@ -54,19 +53,6 @@ namespace EKNM_Bottleshelf.Controllers
                     coctailDries.Remove(dry);
             }
             return new ObjectResult(coctailDries);
-        }
-
-        //Add cocktails dries (TEST FEATURE)
-        public void AddInitDriesTable()
-        {
-            if (!db.DriesTable.Any())
-            {
-                db.DriesTable.Add(new DriesTable { CockId = 1, DryId = 1, Amount = 1 });
-                db.DriesTable.Add(new DriesTable { CockId = 2, DryId = 2, Amount = 1 });
-                db.DriesTable.Add(new DriesTable { CockId = 4, DryId = 4, Amount = 1 });
-                db.DriesTable.Add(new DriesTable { CockId = 5, DryId = 3, Amount = 1 });
-                db.SaveChanges();
-            }
         }
     }
 }

@@ -13,7 +13,6 @@ namespace EKNM_Bottleshelf.Controllers
         public LiquidsController(ContextBH context)
         {
             db = context;
-            AddInitLiquids();
         }
 
         //Get list of all liquids
@@ -82,24 +81,6 @@ namespace EKNM_Bottleshelf.Controllers
             db.Liquids.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);
-        }
-
-
-        //Add list of liquid (TEST FEATURE)
-        public void AddInitLiquids()
-        {
-            if (!db.Liquids.Any())
-            {
-                db.Liquids.Add(new Liquid { Name = "Finlandia", Amount = 3, Degree = 40, Description = "Good vodka", Price = 259, Volume = 700 });
-                db.Liquids.Add(new Liquid { Name = "EKNM Nafta", Amount = 1, Degree = 4.7, Description = "Dark beer from EKNM", Price = 28.5, Volume = 500 });
-                db.Liquids.Add(new Liquid { Name = "Hlibniy Dar", Amount = 2, Degree = 40, Description = "Bad vodka", Price = 125.3, Volume = 700 });
-                db.Liquids.Add(new Liquid { Name = "Coca-Cola", Amount = 6, Degree = 0, Description = "Classic coca-cola", Price = 25.5, Volume = 1500 });
-                db.Liquids.Add(new Liquid { Name = "Corona Extra", Amount = 6, Degree = 4.5, Description = "Corona beer (family)", Price = 32, Volume = 330 });
-                db.Liquids.Add(new Liquid { Name = "Aperol Aperetivo", Amount = 1, Degree = 11, Description = "Good aperetive", Price = 289, Volume = 700 });
-                db.Liquids.Add(new Liquid { Name = "Limon juice Sandora", Amount = 2, Degree = 0, Description = "Just good juice", Price = 42.8, Volume = 500 });
-                db.Liquids.Add(new Liquid { Name = "Children chanpagne", Amount = 1, Degree = 0, Description = "Just soup, with cars already", Price = 69, Volume = 750 });
-                db.SaveChanges();
-            }
         }
     }
 }

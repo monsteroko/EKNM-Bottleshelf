@@ -14,20 +14,11 @@ export class CocktailApiService {
     return this.http.get<any>(this.APIUrl + '/cocktails');
   }
 
-  getDriesTable(id:number){
-    return this.http.get<any>(this.APIUrl + `/driestable/${id}`);
+  getIngridients(id:number){
+    return this.http.get<any>(this.APIUrl + `/Cocktails/${id}/recipe`);
   }
 
-  getLiquidsTable(id:number){
-    return this.http.get<any>(this.APIUrl + `/LiquidsTable/${id}`);
+  getPrice(id:number){
+    return this.http.get<any>(this.APIUrl + `/Cocktails/${id}/price`);
   }
-
-  getLiquid(id:number){
-    return this.http.get(this.APIUrl+`/liquids/${id}`);
-  }
-
-  getDry(id:number){
-    return this.http.get(this.APIUrl+`/dries/${id}`);
-  }
-
 }
