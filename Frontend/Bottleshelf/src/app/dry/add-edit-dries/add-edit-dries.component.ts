@@ -20,6 +20,7 @@ export class AddEditDriesComponent implements OnInit {
   description:string = "";
   amount:number = 0;
   weight:number = 0;
+  packs:number = 0;
 
   ngOnInit(): void {
     this.id = this.dry.id;
@@ -28,6 +29,7 @@ export class AddEditDriesComponent implements OnInit {
     this.description = this.dry.description;
     this.amount = this.dry.amount;
     this.weight = this.dry.weight;
+    this.packs = Math.ceil(this.dry.amount / this.dry.weight);
   }
 
   addDry(){
@@ -36,7 +38,7 @@ export class AddEditDriesComponent implements OnInit {
       name:this.name,
       price:this.price,
       description:this.description,
-      amount:this.amount,
+      amount:this.dry.packs * this.dry.weight,
       weight:this.weight
     }
     this.service.addDry(dry).subscribe(res => {
@@ -45,7 +47,7 @@ export class AddEditDriesComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showAddSuccess = document.getElementById('add-success-alert');
+      var showAddSuccess = document.getElementById('add-success-alert-dry');
       if(showAddSuccess){
         showAddSuccess.style.display = "block";
       }
@@ -58,7 +60,8 @@ export class AddEditDriesComponent implements OnInit {
   }
 
   updateDry(){
-
+    if(Math.ceil(this.dry.amount / this.dry.weight)==this.dry.packs)
+    {
     var dry = {
       id:this.id,
       name:this.name,
@@ -67,6 +70,18 @@ export class AddEditDriesComponent implements OnInit {
       amount:this.amount,
       weight:this.weight,
     }
+  }
+  else
+  {
+    var dry = {
+      id:this.id,
+      name:this.name,
+      price:this.price,
+      description:this.description,
+      amount:this.weight*this.packs,
+      weight:this.weight,
+    }
+  }
     var id:number = this.id;
     this.service.updateDry(id, dry).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
@@ -74,7 +89,7 @@ export class AddEditDriesComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showUpdateSuccess = document.getElementById('update-success-alert');
+      var showUpdateSuccess = document.getElementById('update-success-alert-dry');
       if(showUpdateSuccess){
         showUpdateSuccess.style.display = "block";
       }

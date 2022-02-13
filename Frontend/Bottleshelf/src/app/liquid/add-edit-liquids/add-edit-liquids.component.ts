@@ -22,6 +22,7 @@ export class AddEditLiquidsComponent implements OnInit {
   amount:number = 0;
   volume:number = 0;
   degree:number = 0;
+  bottles:number = 0;
 
   ngOnInit(): void {
     this.id = this.liquid.id;
@@ -31,6 +32,7 @@ export class AddEditLiquidsComponent implements OnInit {
     this.amount = this.liquid.amount;
     this.volume = this.liquid.volume;
     this.degree = this.liquid.degree;
+    this.bottles = Math.ceil(this.liquid.amount / this.liquid.volume);
   }
 
   addLiquid(){
@@ -39,7 +41,7 @@ export class AddEditLiquidsComponent implements OnInit {
       name:this.name,
       price:this.price,
       description:this.description,
-      amount:this.amount,
+      amount:this.liquid.bottles * this.liquid.volume,
       volume:this.volume,
       degree:this.degree,
     }
@@ -49,7 +51,7 @@ export class AddEditLiquidsComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showAddSuccess = document.getElementById('add-success-alert');
+      var showAddSuccess = document.getElementById('add-success-alert-liquid');
       if(showAddSuccess){
         showAddSuccess.style.display = "block";
       }
@@ -62,7 +64,8 @@ export class AddEditLiquidsComponent implements OnInit {
   }
 
   updateLiquid(){
-
+    if(Math.ceil(this.liquid.amount / this.liquid.volume)==this.liquid.bottles)
+    {
     var liquid = {
       id:this.id,
       name:this.name,
@@ -72,6 +75,19 @@ export class AddEditLiquidsComponent implements OnInit {
       volume:this.volume,
       degree:this.degree,
     }
+  }
+  else
+  {
+    var liquid = {
+      id:this.id,
+      name:this.name,
+      price:this.price,
+      description:this.description,
+      amount:this.volume*this.bottles,
+      volume:this.volume,
+      degree:this.degree,
+    }
+  }
     var id:number = this.id;
     this.service.updateLiquid(id, liquid).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
@@ -79,7 +95,7 @@ export class AddEditLiquidsComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showUpdateSuccess = document.getElementById('update-success-alert');
+      var showUpdateSuccess = document.getElementById('update-success-alert-liquid');
       if(showUpdateSuccess){
         showUpdateSuccess.style.display = "block";
       }

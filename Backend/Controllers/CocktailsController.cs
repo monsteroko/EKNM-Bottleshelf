@@ -34,7 +34,7 @@ namespace EKNM_Bottleshelf.Controllers
             return new ObjectResult(component);
         }
 
-        // Get one cocktail
+        // Get cocktail recipe
         // GET api/Cocktails/5/recipe
         [HttpGet("{id}/recipe")]
         public async Task<List<RecipeDTO>> GetRecipe(int id)
@@ -65,8 +65,8 @@ namespace EKNM_Bottleshelf.Controllers
             return recipes;
         }
 
-        // Get one cocktail
-        // GET api/Cocktails/5/recipe
+        // Get cocktail price
+        // GET api/Cocktails/5/price
         [HttpGet("{id}/price")]
         public async Task<double> GetPrice(int id)
         {
@@ -131,6 +131,46 @@ namespace EKNM_Bottleshelf.Controllers
             db.Update(component);
             await db.SaveChangesAsync();
             return Ok(component);
+        }
+
+        //Cook cocktail
+        // PUT api/Cocktails/5/cook
+        [HttpPut("{id}/cook")]
+        public async Task<ActionResult<string>> Cook(int id)
+        {
+            bool enoughcomponents = true;
+            List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            allDries.ForEach(ingridient => {
+                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+                if (dryIngridient.Amount >= ingridient.Amount)
+                {
+                    dryIngridient.Amount=dryIngridient.Amount-ingridient.Amount;
+                }
+                else
+                {
+                    enoughcomponents = false;
+                }
+            });
+            allLiquids.ForEach(ingridient => {
+                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                if (liquidIngridient.Amount >= ingridient.Amount)
+                {
+                    liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
+                }
+                else
+                {
+                    enoughcomponents = false;
+                }
+            });
+            if (enoughcomponents)
+            {
+                return "Cooked";
+            }
+            if (!enoughcomponents)
+            {
+                return "No components";
+            }
         }
 
         // Delete coctail

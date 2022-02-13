@@ -16,8 +16,12 @@
         <input type="text" class="form-control" [(ngModel)]="description" name="description">
     </div>
     <div class="mb-3">
-        <label class="form-label">Amount</label>
-        <input type="number" class="form-control" [(ngModel)]="amount" name="amount">
+        <label class="form-label">Amount in packs</label>
+        <input type="number" class="form-control" [(ngModel)]="amount" name="amount" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Packages</label>
+        <input type="number" class="form-control" [(ngModel)]="packs" name="packs">
     </div>
     <div class="mb-3">
         <label class="form-label">Volume</label>

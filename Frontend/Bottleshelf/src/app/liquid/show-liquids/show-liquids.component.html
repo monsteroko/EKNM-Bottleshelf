@@ -12,9 +12,9 @@
             <th>Name</th>
             <th>Price</th>
             <th>Description</th>
-            <th>Amount</th>
-            <th>Degree</th>
             <th>Volume</th>
+            <th>Bottles</th>
+            <th>Degree</th>
             <th>Total</th>
             <th>Options</th>
         </thead>
@@ -23,10 +23,11 @@
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.amount}}</td>
-                <td>{{item.degree}}</td>
                 <td>{{item.volume}}</td>
-                <td>{{item.volume*item.amount}}</td>
+                <td *ngIf="(item.amount / item.volume)>1" >{{item.amount / item.volume}}</td>
+                <td *ngIf="(item.amount / item.volume)<=1" class="bg-danger">{{item.amount / item.volume}}</td>
+                <td>{{item.degree}}</td>
+                <td>{{item.amount}}</td>
                 <td>
                     <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addLiquid">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
@@ -44,13 +45,13 @@
         </tbody>
     </table>
 
-    <div class="alert alert-success" role="alert" id="add-success-alert">
+    <div class="alert alert-success" role="alert" id="add-success-alert-liquid">
         Liquid successfully added!
     </div>
-    <div class="alert alert-warning" role="alert" id="update-success-alert">
+    <div class="alert alert-warning" role="alert" id="update-success-alert-liquid">
         Liquid successfully updated!
     </div>
-    <div class="alert alert-warning" role="alert" id="delete-success-alert">
+    <div class="alert alert-warning" role="alert" id="delete-success-alert-liquid">
         Liquid successfully deleted!
     </div>
 </div>

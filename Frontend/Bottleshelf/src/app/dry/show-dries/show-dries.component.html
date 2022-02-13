@@ -12,9 +12,9 @@
             <th>Name</th>
             <th>Price</th>
             <th>Description</th>
-            <th>Amount</th>
             <th>Weight</th>
             <th>Total</th>
+            <th>Packages</th>
             <th>Options</th>
         </thead>
         <tbody *ngFor="let item of driesList">
@@ -22,9 +22,10 @@
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.amount}}</td>
                 <td>{{item.weight}}</td>
-                <td>{{item.weight*item.amount}}</td>
+                <td>{{item.amount}}</td>           
+                <td *ngIf="(item.amount / item.weight)>1" >{{item.amount / item.weight}}</td>
+                <td *ngIf="(item.amount / item.weight)<=1" class="bg-danger">{{item.amount / item.weight}}</td>
                 <td>
                     <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addDry">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
@@ -42,13 +43,13 @@
         </tbody>
     </table>
 
-    <div class="alert alert-success" role="alert" id="add-success-alert">
+    <div class="alert alert-success" role="alert" id="add-success-alert-dry">
         Dry successfully added!
     </div>
-    <div class="alert alert-warning" role="alert" id="update-success-alert">
+    <div class="alert alert-warning" role="alert" id="update-success-alert-dry">
         Dry successfully updated!
     </div>
-    <div class="alert alert-warning" role="alert" id="delete-success-alert">
+    <div class="alert alert-warning" role="alert" id="delete-success-alert-dry">
         Dry successfully deleted!
     </div>
 </div>

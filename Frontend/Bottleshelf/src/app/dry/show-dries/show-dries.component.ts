@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DryApiService } from 'src/app/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 
@@ -47,7 +47,7 @@ export class ShowDriesComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showDeleteSuccess = document.getElementById('delete-success-alert');
+      var showDeleteSuccess = document.getElementById('delete-success-alert-dry');
       if(showDeleteSuccess){
         showDeleteSuccess.style.display = "block";
       }

@@ -12,6 +12,6 @@ namespace EKNM_Bottleshelf.Models
     {
         [Column(TypeName = "integer"), Range(0, int.MaxValue)]
         [JsonProperty("weight")]
-        public int? Weight { get; set; }
+        public int Weight { get; set; }
     }
 }

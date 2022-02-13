@@ -49,7 +49,7 @@ export class ShowLiquidsComponent implements OnInit {
         closeModalBtn.click();
       }
 
-      var showDeleteSuccess = document.getElementById('delete-success-alert');
+      var showDeleteSuccess = document.getElementById('delete-success-alert-liquid');
       if(showDeleteSuccess){
         showDeleteSuccess.style.display = "block";
       }
