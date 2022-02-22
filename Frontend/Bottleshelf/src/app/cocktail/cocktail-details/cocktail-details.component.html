@@ -38,4 +38,7 @@
             </tbody>
         </table>
     </div>
+    <button (click)="Cook()" *ngIf="cocktail.id!=0" class="btn btn-primary">
+        Cook
+    </button>
 </form>

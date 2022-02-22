@@ -143,34 +143,35 @@ namespace EKNM_Bottleshelf.Controllers
             List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
             allDries.ForEach(ingridient => {
                 Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
-                if (dryIngridient.Amount >= ingridient.Amount)
-                {
-                    dryIngridient.Amount=dryIngridient.Amount-ingridient.Amount;
-                }
-                else
+                if (dryIngridient.Amount < ingridient.Amount)
                 {
                     enoughcomponents = false;
                 }
             });
             allLiquids.ForEach(ingridient => {
                 Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
-                if (liquidIngridient.Amount >= ingridient.Amount)
-                {
-                    liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
-                }
-                else
+                if (liquidIngridient.Amount < ingridient.Amount)
                 {
                     enoughcomponents = false;
                 }
             });
             if (enoughcomponents)
             {
+                allDries.ForEach(ingridient => {
+                    Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+                    dryIngridient.Amount = dryIngridient.Amount - ingridient.Amount;
+                });
+                allLiquids.ForEach(ingridient => {
+                    Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                    liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
+                });
                 return "Cooked";
             }
             if (!enoughcomponents)
             {
                 return "No components";
             }
+            return BadRequest();
         }
 
         // Delete coctail
