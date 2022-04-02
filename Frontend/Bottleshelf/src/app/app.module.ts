@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './header/header.component';
 import { DryComponent } from './dry/dry.component';
 import { ShowDriesComponent } from './dry/show-dries/show-dries.component';
 import { AddEditDriesComponent } from './dry/add-edit-dries/add-edit-dries.component';
@@ -17,10 +18,12 @@ import { CocktailComponent } from './cocktail/cocktail.component';
 import { ShowCocktailsComponent } from './cocktail/show-cocktails/show-cocktails.component';
 import { AddEditCocktailsComponent } from './cocktail/add-edit-cocktails/add-edit-cocktails.component';
 import { CocktailDetailsComponent } from './cocktail/cocktail-details/cocktail-details.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
     DryComponent,
     ShowDriesComponent,
     AddEditDriesComponent,
@@ -30,7 +33,8 @@ import { CocktailDetailsComponent } from './cocktail/cocktail-details/cocktail-d
     CocktailComponent,
     ShowCocktailsComponent,
     AddEditCocktailsComponent,
-    CocktailDetailsComponent
+    CocktailDetailsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

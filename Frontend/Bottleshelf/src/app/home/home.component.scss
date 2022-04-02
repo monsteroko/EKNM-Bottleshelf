@@ -1,0 +1,42 @@
+.home-section {
+    text-decoration: none;
+    font-family: 'Raleway';
+    position: relative;
+    font-size: 30px;
+    border: None;
+    background-color: transparent;
+    color: white;
+    text-transform: uppercase;
+    height: 100px;
+    transition-duration: 0.2s;
+  }
+  
+  .home-section:hover {
+    color: rgb(126, 43, 194);
+  }
+  
+  .home-section:active {
+    color: black;
+  }
+  
+  .separator {
+    background: white;
+    height: 2px;
+  }
+  
+  .home-lang {
+    text-decoration: none;
+    font-family: 'Raleway';
+    position: relative;
+    font-size: 20px;
+    border: None;
+    background-color: transparent;
+    color: white;
+    text-transform: uppercase;
+    height: 40px;
+    transition-duration: 0.2s;
+  }
+  
+  .home-lang:hover {
+    color: rgb(126, 43, 194) !important;
+  }
