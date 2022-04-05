@@ -98,6 +98,30 @@ namespace EKNM_Bottleshelf.Controllers
             return Math.Round(price,2);
         }
 
+        // Get cocktail degrees
+        // GET api/Cocktails/5/degrees
+        [HttpGet("{id}/degree")]
+        public async Task<double> GetDegrees(int id)
+        {
+            double totalvol = 0;
+            double alcovol = 0;
+            double degrees = 0;
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            allLiquids.ForEach(ingridient => {
+                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                if (liquidIngridient.Degree == 0)
+                {
+                    totalvol += ingridient.Amount;
+                }
+                else
+                {
+                    totalvol += ingridient.Amount;
+                    alcovol += liquidIngridient.Degree/100 * ingridient.Amount;
+                }
+            });
+            degrees = alcovol / totalvol*100;
+            return Math.Round(degrees, 2);
+        }
 
         // Add cocktail
         // POST api/Cocktails

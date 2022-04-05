@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CocktailApiService } from 'src/app/cocktail-api.service';
+import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
 
 @Component({

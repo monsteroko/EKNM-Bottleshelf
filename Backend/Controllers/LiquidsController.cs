@@ -18,20 +18,47 @@ namespace EKNM_Bottleshelf.Controllers
         //Get list of all liquids
         // GET api/Liquids
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Liquid>>> Get()
+        public async Task<ActionResult<IEnumerable<LiquidDTO>>> Get()
         {
-            return await db.Liquids.ToListAsync();
+            List<LiquidDTO> liqs = new List<LiquidDTO>();
+            List<Liquid> liquids = await db.Liquids.ToListAsync();
+            liquids.ForEach(component =>
+            {
+                LiquidDTO liq = new LiquidDTO();
+                liq.Id = component.Id;
+                liq.Name = component.Name;
+                liq.Volume = component.Volume;
+                liq.Amount = component.Amount;
+                liq.Price = component.Price;
+                liq.Degree = component.Degree;
+                liq.Description = component.Description;
+                liq.Bottles = Math.Round((double)(component.Amount / component.Volume));
+                liqs.Add(liq);
+            });
+            return liqs;
         }
 
         //Get liquid component
         // GET api/Liquids/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Liquid>> Get(int id)
+        public async Task<ActionResult<LiquidDTO>> Get(int id)
         {
+            LiquidDTO liq = new LiquidDTO();
             Liquid component = await db.Liquids.FirstOrDefaultAsync(x => x.Id == id);
             if (component == null)
                 return NotFound();
-            return new ObjectResult(component);
+            else
+            {
+                liq.Id=component.Id;
+                liq.Name=component.Name;
+                liq.Volume=component.Volume;
+                liq.Amount = component.Amount;
+                liq.Price = component.Price;
+                liq.Degree = component.Degree;
+                liq.Description = component.Description;
+                liq.Bottles = Math.Round((double)(component.Amount / component.Volume));
+            }
+            return new ObjectResult(liq);
         }
 
         // Add liquid

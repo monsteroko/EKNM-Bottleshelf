@@ -12,15 +12,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  navigateToCocktails() {
-    this.router.navigate(['/cocktails']);
-  }
 
-  navigateToLiquids() {
-    this.router.navigate(['/liquids']);
-  }
-
-  navigateToDries() {
-      this.router.navigate(['/dries']);
-    }
 }

@@ -5,5 +5,6 @@ export interface DryModel {
     price:number;
     description:string;
     amount:number;
-    weight:number
+    weight:number;
+    packs:number
 }

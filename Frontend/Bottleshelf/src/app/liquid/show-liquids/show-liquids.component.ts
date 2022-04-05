@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LiquidApiService } from 'src/app/liquid-api.service';
+import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
 
 @Component({
@@ -35,6 +35,7 @@ export class ShowLiquidsComponent implements OnInit {
       description:'',
       amount:0,
       degree:0,
+      bottles:0,
       volume:0
     }
     this.modalTitle="Add Liquid";

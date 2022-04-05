@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { LiquidApiService } from 'src/app/liquid-api.service';
+import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
 
 @Component({

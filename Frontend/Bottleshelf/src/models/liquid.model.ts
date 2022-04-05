@@ -7,4 +7,5 @@ export interface LiquidModel {
     amount:number;
     volume:number;
     degree:number;
+    bottles:number;
 }

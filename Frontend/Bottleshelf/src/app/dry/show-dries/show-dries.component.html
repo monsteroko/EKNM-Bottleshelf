@@ -24,8 +24,8 @@
                 <td>{{item.description}}</td>
                 <td>{{item.weight}}</td>
                 <td>{{item.amount}}</td>           
-                <td *ngIf="(item.amount / item.weight)>1" >{{item.amount / item.weight}}</td>
-                <td *ngIf="(item.amount / item.weight)<=1" class="bg-danger">{{item.amount / item.weight}}</td>
+                <td *ngIf="item.packs > 1" >{{item.packs}}</td>
+                <td *ngIf="item.packs <= 1" class="bg-danger">{{item.packs}}</td>
                 <td>
                     <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addDry">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">

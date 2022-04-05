@@ -84,32 +84,11 @@ p {
     text-align: justify;
   }
   
-  .separator {
-    margin: 0;
-    background: white;
-    height: 2px;
-    position: relative;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
-  }
-  
   .img-icon {
     max-width: 120px;
     display: block;
     margin-left: auto;
     margin-right: auto;
-  }
-  
-  .bgBeer {
-    background-image: url(assets/bg.png);
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100vw;
-    height: 100vh;
-    z-index: -100;
   }
   
   .width-fit-content {
@@ -131,7 +110,12 @@ p {
   }
   
   html, body { height: 100%; }
-  body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+    background-image: url(assets/bg.png);
+    background-size: 200% 200%;
+  }
   
   .eknm-button-small {
     text-decoration: none;
@@ -169,7 +153,24 @@ p {
     color: white;
     text-align: justify;
   }
-  
-  .blackBG{
-    background-color: black;
+
+  .nav-button{   
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Raleway';
+    position: relative;
+    font-size: 45px;
+    border: None;
+    background-color: transparent;
+    color: rgb(153, 153, 153);
+    text-transform: uppercase;
+    height: 40px;
+    font-weight: lighter;
+    transition-duration: 0.2s;
+}
+.nav-button:hover{ 
+    color: rgb(255, 255, 255);
+  }
+.nav-button:active {
+    color: rgb(255, 255, 255);
   }

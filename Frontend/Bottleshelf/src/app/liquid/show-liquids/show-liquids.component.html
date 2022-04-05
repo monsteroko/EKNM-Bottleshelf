@@ -24,8 +24,8 @@
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.volume}}</td>
-                <td *ngIf="(item.amount / item.volume)>1" >{{item.amount / item.volume}}</td>
-                <td *ngIf="(item.amount / item.volume)<=1">≤1</td>
+                <td *ngIf="(item.bottles)>1" >{{item.bottles}}</td>
+                <td *ngIf="(item.bottles)<=1">{{item.bottles}}</td>
                 <td>{{item.degree}}</td>
                 <td>{{item.amount}}</td>
                 <td>

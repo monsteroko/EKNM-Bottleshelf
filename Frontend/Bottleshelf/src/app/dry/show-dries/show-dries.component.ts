@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DryApiService } from 'src/app/dry-api.service';
+import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 
 @Component({
@@ -33,6 +33,7 @@ export class ShowDriesComponent implements OnInit {
       price:0,
       description:'',
       amount:0,
+      packs:0,
       weight:0
     }
     this.modalTitle="Add Dry";

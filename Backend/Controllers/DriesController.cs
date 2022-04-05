@@ -18,20 +18,45 @@ namespace EKNM_Bottleshelf.Controllers
         // Get list of all dries
         // GET api/Dries
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Dry>>> Get()
+        public async Task<ActionResult<IEnumerable<DryDTO>>> Get()
         {
-            return await db.Dries.ToListAsync();
+            List<DryDTO> dries = new List<DryDTO>();
+            List<Dry> components = await db.Dries.ToListAsync();
+            components.ForEach(component =>
+            {
+                DryDTO dry = new DryDTO();
+                dry.Id = component.Id;
+                dry.Name = component.Name;
+                dry.Weight = component.Weight;
+                dry.Amount = component.Amount;
+                dry.Price = component.Price;
+                dry.Description = component.Description;
+                dry.Packs = Math.Round((double)(component.Amount / component.Weight));
+                dries.Add(dry);
+            });
+            return dries;
         }
 
         // Get dry component
         // GET api/Dries/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Dry>> Get(int id)
+        public async Task<ActionResult<DryDTO>> Get(int id)
         {
+            DryDTO dry = new DryDTO();
             Dry component = await db.Dries.FirstOrDefaultAsync(x => x.Id == id);
             if (component == null)
                 return NotFound();
-            return new ObjectResult(component);
+            else
+            {
+                dry.Id = component.Id;
+                dry.Name = component.Name;
+                dry.Weight = component.Weight;
+                dry.Amount = component.Amount;
+                dry.Price = component.Price;
+                dry.Description = component.Description;
+                dry.Packs = Math.Round((double)(component.Amount / component.Weight));
+            }
+            return new ObjectResult(dry);
         }
 
         // Add dry

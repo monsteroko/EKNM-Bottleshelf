@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DryApiService } from 'src/app/dry-api.service';
+import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 
 @Component({
@@ -29,7 +29,7 @@ export class AddEditDriesComponent implements OnInit {
     this.description = this.dry.description;
     this.amount = this.dry.amount;
     this.weight = this.dry.weight;
-    this.packs = Math.ceil(this.dry.amount / this.dry.weight);
+    this.packs = this.dry.packs;
   }
 
   addDry(){

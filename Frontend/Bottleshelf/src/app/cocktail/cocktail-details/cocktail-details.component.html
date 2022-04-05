@@ -16,6 +16,10 @@
         <input type="text" class="form-control" [(ngModel)]="description" name="description" readonly>
     </div>
     <div class="mb-3">
+        <label class="form-label">Degrees</label>
+        <input type="number" class="form-control" [(ngModel)]="degrees" name="degrees" readonly>
+    </div>
+    <div class="mb-3">
         <label class="form-label">Price</label>
         <input type="number" class="form-control" [(ngModel)]="price" name="price" readonly>
     </div>
@@ -39,6 +43,6 @@
         </table>
     </div>
     <button (click)="Cook()" *ngIf="cocktail.id!=0" class="btn btn-primary">
-        Cook
+        Make
     </button>
 </form>

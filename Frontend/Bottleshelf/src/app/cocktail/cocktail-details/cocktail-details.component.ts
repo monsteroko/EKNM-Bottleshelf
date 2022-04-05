@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CocktailApiService } from 'src/app/cocktail-api.service';
+import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
 import { IngridientModel } from 'src/models/ingridient.model';
 
@@ -19,6 +19,7 @@ export class CocktailDetailsComponent implements OnInit {
   name: string = "";
   volumeML:number = 0;
   description:string = "";
+  degrees:number=0;
   price:number = 0;
   ngOnInit(): void {
     this.id = this.cocktail.id;
@@ -32,6 +33,10 @@ export class CocktailDetailsComponent implements OnInit {
     this.service.getPrice(this.id).toPromise().then(data => { 
       if (data)
       this.price = data;
+    });
+    this.service.getDegrees(this.id).toPromise().then(data => { 
+      if (data)
+      this.degrees = data;
     });
   }
 
