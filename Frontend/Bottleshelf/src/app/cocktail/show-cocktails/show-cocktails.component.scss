@@ -1,0 +1,49 @@
+table {
+    width: 100%;
+  }
+  
+.mat-form-field {
+  font-size: 14pt;
+  width: 100%;
+}
+
+td, th {
+  width: 25%;
+}
+
+th.mat-header-cell, td.mat-cell, td.mat-footer-cell {
+    padding: 10px;
+    font-size: 14pt;
+    text-align: center;
+}
+th.mat-header-cell {
+  text-align: center;
+}
+
+.mat-raised-button{
+  text-transform: uppercase;
+  font-family: 'Megrim';
+  font-size: 16pt;
+  font-weight: bolder;
+}
+
+#cook-success-alert-cocktail {
+    display: none;
+}
+
+#cook-success-alert-cocktail {
+    animation-name: fadeInAndOut;
+    animation-duration: 4s;
+}
+
+@-webkit-keyframes fadeInAndOut {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@keyframes fadeInAndOut {
+    0% {opacity: 0;}
+    50% {opacity: 1;}
+    100% {opacity: 0;}
+}
