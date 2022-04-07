@@ -1,46 +1,31 @@
 <div class="bg-dark px-4 pt-5 my-5 text-center align-items-center rounded-3 border shadow-lg">
-
     <h1 class="display-7 fw-bold text-white"> Cocktails </h1>
     <br>
-    <table mat-table [dataSource]="dataSource" matSort #empTbSort="matSort" class="mat-elevation-z8 table table-hover table-dark">
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name"> Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-        
-        <!-- Weight Column -->
-        <ng-container matColumnDef="volume">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by volume"> Volume </th>
-            <td mat-cell *matCellDef="let element"> {{element.volumeML}} ML </td>
-        </ng-container>
-        
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="description">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by description"> Description </th>
-            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
-        </ng-container>
-
-        <!-- Options Column -->
-        <ng-container matColumnDef="options">
-            <th mat-header-cell *matHeaderCellDef> Options </th>
-            <td mat-cell *matCellDef="let element"><button mat-raised-button (click)="modalDetails(element)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
-                Details
-                </button></td>
-            </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <table class="table table-hover table-dark">
+        <thead>
+            <th>Name</th>
+            <th>Volume</th>
+            <th>Description</th>
+            <th>Options</th>
+        </thead>
+        <tbody *ngFor="let item of cocktailsList">
+            <tr>
+                <td>{{item.name}}</td>
+                <td>{{item.volumeML}}</td>
+                <td>{{item.description}}</td>
+                <td>
+                    <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
+                       Details
+                    </button>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
-    <div class="alert alert-success" role="alert" id="cook-success-alert-cocktail">
+    <!--<div class="alert alert-success" role="alert" id="cook-success-alert-cocktail">
         Cocktail successfully cooked!
-    </div>
-
+    </div>-->
 </div>
-
-
 <!-- Cocktail details Modal -->
 <div class="modal fade" id="detailsCocktail" tabindex="-2" aria-labelledby="detailsLabel" aria-hidden="true">
     <div class="modal-dialog">

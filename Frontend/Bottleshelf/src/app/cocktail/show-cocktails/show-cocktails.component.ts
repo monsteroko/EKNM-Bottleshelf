@@ -1,30 +1,27 @@
-import {Component, ViewChild, AfterViewInit, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
-import {MatSort, Sort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
 
 @Component({
   selector: 'app-show-cocktails',
   templateUrl: './show-cocktails.component.html',
   styleUrls: ['./show-cocktails.component.scss']
 })
-
 export class ShowCocktailsComponent implements OnInit {
 
-  public displayedColumns: string[] = ['name', 'volume', 'description', 'options'];
-  public dataSource = new MatTableDataSource();
-  @ViewChild('Coctailsort') Coctailsort = new MatSort();
+  cocktailsList = [] as CocktailModel[];
+
   constructor(private service:CocktailApiService) { }
 
   ngOnInit(): void {
-    
     this.service.getCocktailsList().toPromise().then(data => { 
       if (data)
-      this.dataSource = data;
+      this.cocktailsList = data;
     })
+
   }
 
+  
   //Variables (properties)
   modalTitle:string = '';
   activateCocktailDetailsComponent:boolean = false;
@@ -39,7 +36,7 @@ export class ShowCocktailsComponent implements OnInit {
     this.activateCocktailDetailsComponent = false;
     this.service.getCocktailsList().toPromise().then(data => { 
         if (data)
-        this.dataSource = data;})
+        this.cocktailsList = data;})
   }
 
 }
