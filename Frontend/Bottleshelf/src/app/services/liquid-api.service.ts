@@ -15,6 +15,10 @@ export class LiquidApiService {
     return this.http.get<any>(this.APIUrl + '/liquids');
   }
 
+  getLiquidsToBuy(){
+    return this.http.get<any>(this.APIUrl + '/liquids/buy');
+  }
+
   addLiquid(data:any){
     return this.http.post(this.APIUrl + '/liquids', data);
   }

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
 import {Sort} from '@angular/material/sort';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-show-liquids',
@@ -12,7 +14,7 @@ export class ShowLiquidsComponent implements OnInit {
 
   liquidsList = [] as LiquidModel[];
   sortedData = [] as LiquidModel[];
-
+  liquidsToBuy = [] as LiquidModel[];
   constructor(private service:LiquidApiService) { }
 
   ngOnInit(): void {
@@ -57,6 +59,29 @@ export class ShowLiquidsComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  buyLiquids(){
+    this.service.getLiquidsToBuy().toPromise().then(data => { 
+      if (data)
+      this.liquidsToBuy = data;
+    })
+    const head = [['Name', 'Volume', 'Price']]
+    const db : [[string, number, number]]= [['Buy beer',500,25]];
+    this.liquidsToBuy.forEach(element =>{
+      var str: [string, number, number] = [element.name,element.volume,element.price];
+      db.push(str);
+    }
+    );
+    const doc = new jsPDF()
+    autoTable(doc, {
+      head: head,
+      body : db,
+      didDrawCell: (data: { column: { index: any; }; }) => {
+        console.log(data.column.index)
+      },
+      })
+    doc.output('dataurlnewwindow');
   }
 
   modalAdd() {

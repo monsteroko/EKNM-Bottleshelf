@@ -37,6 +37,31 @@ namespace EKNM_Bottleshelf.Controllers
             return dries;
         }
 
+        //Get all running out dries
+        // GET api/Dries/buy
+        [HttpGet("buy")]
+        public async Task<ActionResult<IEnumerable<DryDTO>>> GetRunningOut()
+        {
+            List<DryDTO> dries = new List<DryDTO>();
+            List<Dry> components = await db.Dries.ToListAsync();
+            components.ForEach(component =>
+            {
+                if (Math.Round((double)(component.Amount / component.Weight)) <= 1)
+                {
+                    DryDTO dry = new DryDTO();
+                    dry.Id = component.Id;
+                    dry.Name = component.Name;
+                    dry.Weight = component.Weight;
+                    dry.Amount = component.Amount;
+                    dry.Price = component.Price;
+                    dry.Description = component.Description;
+                    dry.Packs = Math.Round((double)(component.Amount / component.Weight));
+                    dries.Add(dry);
+                }
+            });
+            return dries;
+        }
+
         // Get dry component
         // GET api/Dries/5
         [HttpGet("{id}")]

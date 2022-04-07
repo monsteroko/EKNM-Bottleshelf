@@ -61,6 +61,32 @@ namespace EKNM_Bottleshelf.Controllers
             return new ObjectResult(liq);
         }
 
+        //Get all running out liquids
+        // GET api/Liquids/buy
+        [HttpGet("buy")]
+        public async Task<ActionResult<IEnumerable<LiquidDTO>>> GetRunningOut()
+        {
+            List<LiquidDTO> liqs = new List<LiquidDTO>();
+            List<Liquid> liquids = await db.Liquids.ToListAsync();
+            liquids.ForEach(component =>
+            {
+                if (Math.Round((double)(component.Amount / component.Volume)) <= 1)
+                {
+                    LiquidDTO liq = new LiquidDTO();
+                    liq.Id = component.Id;
+                    liq.Name = component.Name;
+                    liq.Volume = component.Volume;
+                    liq.Amount = component.Amount;
+                    liq.Price = component.Price;
+                    liq.Degree = component.Degree;
+                    liq.Description = component.Description;
+                    liq.Bottles = Math.Round((double)(component.Amount / component.Volume));
+                    liqs.Add(liq);
+                }
+            });
+            return liqs;
+        }
+
         // Add liquid
         // POST api/Liquids
         [HttpPost]
