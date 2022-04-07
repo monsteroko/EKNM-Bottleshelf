@@ -1,31 +1,40 @@
 <div class="bg-dark px-4 pt-5 my-5 text-center align-items-center rounded-3 border shadow-lg">
     <h1 class="display-7 fw-bold text-white"> Cocktails </h1>
     <br>
-    <table class="table table-hover table-dark">
-        <thead>
-            <th>Name</th>
-            <th>Volume</th>
-            <th>Description</th>
+    <div class="card text-white bg-secondary mb-3" style="max-width: 15rem;">
+        <div class="card-header"> <h5 class="card-title">Filter</h5></div>
+        <select class="form-select w-20" (change)="selectSizeHandler($event)">
+            <option selected value="0">All</option>
+            <option value="1">Shots</option>
+            <option value="2">Shorts</option>
+            <option value="3">Longs</option>
+        </select>
+    </div>
+    <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">
+        <tr>
+            <th mat-sort-header="name">Name</th>
+            <th mat-sort-header="volume">Volume</th>
+            <th mat-sort-header="description">Description</th>
             <th>Options</th>
-        </thead>
-        <tbody *ngFor="let item of cocktailsList">
-            <tr>
-                <td>{{item.name}}</td>
-                <td>{{item.volumeML}}</td>
-                <td>{{item.description}}</td>
-                <td>
-                    <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
-                       Details
-                    </button>
-                </td>
-            </tr>
-        </tbody>
+        </tr>
+        <tr *ngFor="let item of sortedData">
+            <td>{{item.name}}</td>
+            <td>{{item.volumeML}} ml</td>
+            <td>{{item.description}}</td>
+            <td>
+                <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
+                    Details
+                </button>
+            </td>
+        </tr>
     </table>
 
-    <!--<div class="alert alert-success" role="alert" id="cook-success-alert-cocktail">
+    <div class="alert alert-success" role="alert" id="cook-success-alert-cocktail">
         Cocktail successfully cooked!
-    </div>-->
+    </div>
 </div>
+
+
 <!-- Cocktail details Modal -->
 <div class="modal fade" id="detailsCocktail" tabindex="-2" aria-labelledby="detailsLabel" aria-hidden="true">
     <div class="modal-dialog">

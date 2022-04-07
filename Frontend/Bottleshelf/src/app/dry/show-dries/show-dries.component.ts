@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-dries',
@@ -10,13 +11,14 @@ import { DryModel } from 'src/models/dry.model';
 export class ShowDriesComponent implements OnInit {
 
   driesList = [] as DryModel[];
-
-  constructor(private service:DryApiService) { }
+  sortedData = [] as DryModel[];
+  constructor(private service:DryApiService) {}
 
   ngOnInit(): void {
     this.service.getDriesList().toPromise().then(data => { 
       if (data)
       this.driesList = data;
+      this.sortedData = this.driesList.slice();
     })
 
   }
@@ -25,6 +27,34 @@ export class ShowDriesComponent implements OnInit {
   modalTitle:string = '';
   activateAddEditDryComponent:boolean = false;
   dry!:DryModel;
+
+  sortData(sort: Sort) {
+    const data = this.driesList.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return compare(a.name, b.name, isAsc);
+        case 'price':
+          return compare(a.price, b.price, isAsc);
+        case 'description':
+          return compare(a.description, b.description, isAsc);
+        case 'weight':
+          return compare(a.weight, b.weight, isAsc);
+        case 'amount':
+          return compare(a.amount, b.amount, isAsc);
+        case 'packs':
+          return compare(a.packs, b.packs, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
 
   modalAdd() {
     this.dry = {
@@ -75,5 +105,7 @@ export class ShowDriesComponent implements OnInit {
         if (data)
         this.driesList = data;})
   }
-
+}
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

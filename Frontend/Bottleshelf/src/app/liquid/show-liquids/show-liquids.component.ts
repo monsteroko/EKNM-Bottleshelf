@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-liquids',
@@ -11,6 +11,7 @@ import { LiquidModel } from 'src/models/liquid.model';
 export class ShowLiquidsComponent implements OnInit {
 
   liquidsList = [] as LiquidModel[];
+  sortedData = [] as LiquidModel[];
 
   constructor(private service:LiquidApiService) { }
 
@@ -18,6 +19,7 @@ export class ShowLiquidsComponent implements OnInit {
     this.service.getLiquidsList().toPromise().then(data => { 
       if (data)
       this.liquidsList = data;
+      this.sortedData = this.liquidsList.slice();
     })
 
   }
@@ -26,6 +28,36 @@ export class ShowLiquidsComponent implements OnInit {
   modalTitle:string = '';
   activateAddEditLiquidComponent:boolean = false;
   liquid!:LiquidModel;
+
+  sortData(sort: Sort) {
+    const data = this.liquidsList.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return compare(a.name, b.name, isAsc);
+        case 'price':
+          return compare(a.price, b.price, isAsc);
+        case 'description':
+          return compare(a.description, b.description, isAsc);
+        case 'volume':
+          return compare(a.volume, b.volume, isAsc);
+        case 'bottles':
+          return compare(a.bottles, b.bottles, isAsc);
+        case 'degree':
+          return compare(a.degree, b.degree, isAsc);
+          case 'amount':
+            return compare(a.amount, b.amount, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
 
   modalAdd() {
     this.liquid = {
@@ -77,4 +109,7 @@ export class ShowLiquidsComponent implements OnInit {
         if (data)
         this.liquidsList = data;})
   }
+}
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

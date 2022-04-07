@@ -174,3 +174,8 @@ p {
 .nav-button:active {
     color: rgb(255, 255, 255);
   }
+.mat-header-cell, .mat-cell {
+    justify-content: center;
+  }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -18,6 +18,10 @@ export class CocktailApiService {
     return this.http.get<any>(this.APIUrl + `/Cocktails/${id}/recipe`);
   }
 
+  getCocktailsFilters(id:number){
+    return this.http.get<any>(this.APIUrl + `/Cocktails/size/${id}`);
+  }
+
   getPrice(id:number){
     return this.http.get<any>(this.APIUrl + `/Cocktails/${id}/price`);
   }

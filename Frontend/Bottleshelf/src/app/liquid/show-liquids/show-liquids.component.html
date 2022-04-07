@@ -7,27 +7,27 @@
     </button>
     <br>
     <br>
-    <table class="table table-hover table-dark">
+    <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">
         <thead>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Volume</th>
-            <th>Bottles</th>
-            <th>Degree</th>
-            <th>Total</th>
+            <th mat-sort-header="name">Name</th>
+            <th mat-sort-header="price">Price</th>
+            <th mat-sort-header="description">Description</th>
+            <th mat-sort-header="volume">Volume</th>
+            <th mat-sort-header="bottles">Bottles</th>
+            <th mat-sort-header="degree">Degree</th>
+            <th mat-sort-header="amount">Total</th>
             <th>Options</th>
         </thead>
-        <tbody *ngFor="let item of liquidsList">
+        <tbody *ngFor="let item of sortedData">
             <tr>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.volume}}</td>
+                <td>{{item.volume}} ml</td>
                 <td *ngIf="(item.bottles)>1" >{{item.bottles}}</td>
                 <td *ngIf="(item.bottles)<=1">{{item.bottles}}</td>
                 <td>{{item.degree}}</td>
-                <td>{{item.amount}}</td>
+                <td>{{item.amount}} ml</td>
                 <td>
                     <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addLiquid">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">

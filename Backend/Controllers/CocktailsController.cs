@@ -18,20 +18,85 @@ namespace EKNM_Bottleshelf.Controllers
         // Get all cocktails
         // GET api/Cocktails
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Cocktail>>> Get()
+        public async Task<ActionResult<IEnumerable<CocktailDTO>>> Get()
         {
-            return await db.Cocktails.ToListAsync();
+            List<CocktailDTO> cocktailsDTOs = new List<CocktailDTO>();
+            List<Cocktail> cocktails = await db.Cocktails.ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.ToListAsync();
+            cocktails.ForEach(element =>
+            {
+                List<LiquidsTable> cocktailLiqs = allLiquids.Where(x => x.CockId == element.Id).ToList();
+                CocktailDTO cocktail = new CocktailDTO();
+                cocktail.Id = element.Id;
+                cocktail.Name = element.Name;
+                cocktail.Description = element.Description;
+                cocktailLiqs.ForEach(ingridient => {
+                    cocktail.VolumeML += ingridient.Amount;
+                });
+                cocktailsDTOs.Add(cocktail);
+            });
+            return cocktailsDTOs;
+        }
+
+        //Get cocktails by size
+        //Get api/Cocktails/size/1
+        [HttpGet("size/{id}")]
+        public async Task<ActionResult<IEnumerable<CocktailDTO>>> GetSize(int id)
+        {
+            List<CocktailDTO> cocktailsDTOs = new List<CocktailDTO>();
+            List<Cocktail> cocktails = await db.Cocktails.ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.ToListAsync();
+            cocktails.ForEach(element =>
+            {
+                List<LiquidsTable> cocktailLiqs = allLiquids.Where(x => x.CockId == element.Id).ToList();
+                CocktailDTO cocktail = new CocktailDTO();
+                cocktail.Id = element.Id;
+                cocktail.Name = element.Name;
+                cocktail.Description = element.Description;
+                cocktailLiqs.ForEach(ingridient => {
+                    cocktail.VolumeML += ingridient.Amount;
+                });
+                switch (id)
+                {
+                    case 0:
+                        cocktailsDTOs.Add(cocktail);
+                        break;
+                    case 1:
+                        if (cocktail.VolumeML < 60)
+                            cocktailsDTOs.Add(cocktail);
+                        break;
+                    case 2:
+                        if(cocktail.VolumeML>=60 && cocktail.VolumeML<=160)
+                            cocktailsDTOs.Add(cocktail);
+                        break;
+                    case 3:
+                        if (cocktail.VolumeML > 160)
+                            cocktailsDTOs.Add(cocktail);
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return cocktailsDTOs;
         }
 
         // Get one cocktail
         // GET api/Cocktails/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Cocktail>> Get(int id)
+        public async Task<ActionResult<CocktailDTO>> Get(int id)
         {
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            CocktailDTO cocktail= new CocktailDTO();
             Cocktail component = await db.Cocktails.FirstOrDefaultAsync(x => x.Id == id);
             if (component == null)
                 return NotFound();
-            return new ObjectResult(component);
+            cocktail.Id = component.Id;
+            cocktail.Name = component.Name;
+            cocktail.Description = component.Description;
+            allLiquids.ForEach(ingridient => {
+                cocktail.VolumeML += ingridient.Amount;
+            });
+            return new ObjectResult(cocktail);
         }
 
         // Get cocktail recipe

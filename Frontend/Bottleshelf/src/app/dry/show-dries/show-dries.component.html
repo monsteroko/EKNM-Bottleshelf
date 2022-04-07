@@ -7,23 +7,23 @@
     </button>
     <br>
     <br>
-    <table class="table table-hover table-dark">
+    <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">
         <thead>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Weight</th>
-            <th>Total</th>
-            <th>Packages</th>
+            <th mat-sort-header="name">Name</th>
+            <th mat-sort-header="price">Price</th>
+            <th mat-sort-header="description">Description</th>
+            <th mat-sort-header="weight">Weight</th>
+            <th mat-sort-header="amount">Total</th>
+            <th mat-sort-header="packs">Packages</th>
             <th>Options</th>
         </thead>
-        <tbody *ngFor="let item of driesList">
+        <tbody *ngFor="let item of sortedData">
             <tr>
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.weight}}</td>
-                <td>{{item.amount}}</td>           
+                <td>{{item.weight}} gr</td>
+                <td>{{item.amount}} gr</td>           
                 <td *ngIf="item.packs > 1" >{{item.packs}}</td>
                 <td *ngIf="item.packs <= 1" class="bg-danger">{{item.packs}}</td>
                 <td>
