@@ -5,6 +5,9 @@
     <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#addDry" (click)="modalAdd()">
         Add Dry
     </button>
+    <button type="button" class="btn btn-warning float-end m-2" (click)="buyDries()">
+        Buy dries
+    </button>
     <br>
     <br>
     <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">

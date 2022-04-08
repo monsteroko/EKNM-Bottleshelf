@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 import {Sort} from '@angular/material/sort';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 @Component({
   selector: 'app-show-dries',
@@ -12,6 +14,8 @@ export class ShowDriesComponent implements OnInit {
 
   driesList = [] as DryModel[];
   sortedData = [] as DryModel[];
+  driesToBuy = [] as DryModel[];
+
   constructor(private service:DryApiService) {}
 
   ngOnInit(): void {
@@ -27,6 +31,30 @@ export class ShowDriesComponent implements OnInit {
   modalTitle:string = '';
   activateAddEditDryComponent:boolean = false;
   dry!:DryModel;
+
+  buyDries(){
+    this.service.getDriesToBuy().toPromise().then(data => { 
+      if (data)
+      this.driesToBuy = data;
+    })
+    const head = [['Name', 'Volume', 'Price']]
+    const db : [[string, number, number]]= [['Buy beer',500,25]];
+    this.driesToBuy.forEach(element =>{
+      var str: [string, number, number] = [element.name,element.weight,element.price];
+      db.push(str);
+    }
+    );
+    const doc = new jsPDF();
+    doc.text('Dries to buy',10,10);
+    autoTable(doc, {
+      head: head,
+      body : db,
+      didDrawCell: (data: { column: { index: any; }; }) => {
+        console.log(data.column.index)
+      },
+      })
+    doc.output('dataurlnewwindow');
+  }
 
   sortData(sort: Sort) {
     const data = this.driesList.slice();

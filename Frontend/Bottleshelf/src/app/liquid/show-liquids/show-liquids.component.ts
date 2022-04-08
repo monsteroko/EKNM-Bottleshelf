@@ -15,6 +15,7 @@ export class ShowLiquidsComponent implements OnInit {
   liquidsList = [] as LiquidModel[];
   sortedData = [] as LiquidModel[];
   liquidsToBuy = [] as LiquidModel[];
+
   constructor(private service:LiquidApiService) { }
 
   ngOnInit(): void {
@@ -74,6 +75,7 @@ export class ShowLiquidsComponent implements OnInit {
     }
     );
     const doc = new jsPDF()
+    doc.text('Liquids to buy',10,10);
     autoTable(doc, {
       head: head,
       body : db,

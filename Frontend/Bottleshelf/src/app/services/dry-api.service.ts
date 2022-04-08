@@ -15,6 +15,10 @@ export class DryApiService {
     return this.http.get<any>(this.APIUrl + '/dries');
   }
 
+  getDriesToBuy(){
+    return this.http.get<any>(this.APIUrl + '/dries/buy');
+  }
+
   addDry(data:any){
     return this.http.post(this.APIUrl + '/dries', data);
   }
