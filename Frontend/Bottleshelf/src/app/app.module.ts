@@ -14,7 +14,7 @@ import { ShowLiquidsComponent } from './liquid/show-liquids/show-liquids.compone
 import { AddEditLiquidsComponent } from './liquid/add-edit-liquids/add-edit-liquids.component';
 import { LiquidApiService } from './services/liquid-api.service';
 import { ShowCocktailsComponent } from './cocktail/show-cocktails/show-cocktails.component';
-import { AddEditCocktailsComponent } from './cocktail/add-edit-cocktails/add-edit-cocktails.component';
+import { AddEditCocktailsComponent } from './cocktail/add-cocktails/add-cocktails.component';
 import { CocktailDetailsComponent } from './cocktail/cocktail-details/cocktail-details.component';
 import { HomeComponent } from './home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';

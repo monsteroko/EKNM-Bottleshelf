@@ -33,6 +33,7 @@ export class ShowCocktailsComponent implements OnInit {
   //Variables (properties)
   modalTitle:string = '';
   activateCocktailDetailsComponent:boolean = false;
+  activateAddCocktailComponent:boolean = false;
   cocktail!:CocktailModel;
   selectedSize: number = 0;
 
@@ -68,16 +69,28 @@ export class ShowCocktailsComponent implements OnInit {
     });
   }
 
+  modalAdd(){
+    this.activateAddCocktailComponent=true;
+  }
+  addModalClose() {
+    this.activateAddCocktailComponent=false;
+    this.service.getCocktailsList().toPromise().then(data => { 
+      if (data)
+      this.cocktailsList = data;
+      this.sortedData = this.cocktailsList.slice();})
+  }
+
   modalDetails(item:CocktailModel){
     this.cocktail= item;
     this.modalTitle="Cocktail details";
     this.activateCocktailDetailsComponent=true;
   }
-  modalClose() {
+  updateModalClose() {
     this.activateCocktailDetailsComponent = false;
     this.service.getCocktailsList().toPromise().then(data => { 
         if (data)
-        this.cocktailsList = data;})
+        this.cocktailsList = data;
+        this.sortedData = this.cocktailsList.slice();})
   }
 
 }

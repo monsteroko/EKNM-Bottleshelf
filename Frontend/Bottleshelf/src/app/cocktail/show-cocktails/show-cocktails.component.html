@@ -10,6 +10,10 @@
             <option value="3">Longs</option>
         </select>
     </div>
+    <!-- Add cocktail trigger modal -->
+        <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#addCocktail" (click)="modalAdd()">
+            Add Cocktail
+        </button>
     <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">
         <tr>
             <th mat-sort-header="name">Name</th>
@@ -22,18 +26,43 @@
             <td>{{item.volumeML}} ml</td>
             <td>{{item.description}}</td>
             <td>
+                <!-- Cocktail details trigger modal -->
                 <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
                     Details
                 </button>
             </td>
         </tr>
     </table>
-
+    <div class="alert alert-success" role="alert" id="add-success-alert-cocktail">
+        Cocktail successfully added!
+    </div>
+    <div class="alert alert-warning" role="alert" id="update-success-alert-cocktail">
+        Cocktail successfully updated!
+    </div>
+    <div class="alert alert-warning" role="alert" id="delete-success-alert-cocktail">
+        Cocktail successfully deleted!
+    </div>
     <div class="alert alert-success" role="alert" id="cook-success-alert-cocktail">
         Cocktail successfully cooked!
     </div>
 </div>
 
+
+<!-- Add cocktail Modal -->
+<div class="modal fade" id="addCocktail" tabindex="-2" aria-labelledby="AddLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="CoctailAddLabel">Add cocktail</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="addModalClose()" id="add-edit-modal-close"></button>
+        </div>
+        <div class="modal-body">
+        <app-add-cocktails *ngIf="activateAddCocktailComponent"></app-add-cocktails>
+        </div>
+    </div>
+</div>
+</div>
 
 <!-- Cocktail details Modal -->
 <div class="modal fade" id="detailsCocktail" tabindex="-2" aria-labelledby="detailsLabel" aria-hidden="true">
@@ -42,7 +71,7 @@
         <div class="modal-header">
         <h5 class="modal-title" id="detailsCoctailLabel">{{modalTitle}}</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-            (click)="modalClose()" id="add-edit-modal-close"></button>
+            (click)="updateModalClose()" id="add-edit-modal-close"></button>
         </div>
         <div class="modal-body">
         <app-cocktail-details [cocktail]="cocktail" *ngIf="activateCocktailDetailsComponent"></app-cocktail-details>

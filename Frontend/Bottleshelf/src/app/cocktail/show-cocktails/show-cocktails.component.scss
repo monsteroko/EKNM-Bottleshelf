@@ -1,8 +1,14 @@
-#cook-success-alert-cocktail {
+#cook-success-alert-cocktail,
+#add-success-alert-cocktail,
+#update-success-alert-cocktail,
+#delete-success-alert-cocktail  {
     display: none;
 }
 
-#cook-success-alert-cocktail {
+#cook-success-alert-cocktail,
+#add-success-alert-cocktail,
+#update-success-alert-cocktail,
+#delete-success-alert-cocktail {
     animation-name: fadeInAndOut;
     animation-duration: 4s;
 }

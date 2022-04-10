@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddEditCocktailsComponent } from './add-edit-cocktails.component';
+import { AddEditCocktailsComponent } from './add-cocktails.component';
 
 describe('AddEditCocktailsComponent', () => {
   let component: AddEditCocktailsComponent;
