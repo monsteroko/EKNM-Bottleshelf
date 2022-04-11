@@ -273,6 +273,10 @@ namespace EKNM_Bottleshelf.Controllers
             {
                 return NotFound();
             }
+            List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            db.DriesTable.RemoveRange(allDries);
+            db.LiquidsTable.RemoveRange(allLiquids);
             db.Cocktails.Remove(component);
             await db.SaveChangesAsync();
             return Ok(component);

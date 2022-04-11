@@ -9,13 +9,16 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Liquid Ingridients</label>
+        <button (click)="addLiquidIngridient()" class="btn btn-primary">
+            +
+        </button>
         <table class="table table-hover">
             <thead>
                 <th>Name</th>
                 <th>Amount</th>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="htmlToAddLiquids">
+                <tr id="liqTR">
                     <td>
                         <select  class="form-control" name="Liquids">
                             <option disabled selected>Select liquid</option>
@@ -25,21 +28,24 @@
                         </select>
                     </td>
                     <td>
-                        <input type="number" id="quantity" name="quantity" min="1" max="1000">
+                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> ml
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
     <div class="mb-3">
-        <label class="form-label">Dry Ingridients</label>
+        <label class="form-label">Dry Ingridients</label>                
+        <button (click)="addDryIngridient()" class="btn btn-primary">
+            +
+        </button>
         <table class="table table-hover">
             <thead>
                 <th>Name</th>
                 <th>Amount</th>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="htmlToAddDries">
+                <tr id="dryTR">
                     <td>
                         <select  class="form-control" name="dries">
                             <option disabled selected>Select dry</option>
@@ -49,7 +55,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="number" id="quantity" name="quantity" min="1" max="1000">
+                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> gr
                     </td>
                 </tr>
             </tbody>

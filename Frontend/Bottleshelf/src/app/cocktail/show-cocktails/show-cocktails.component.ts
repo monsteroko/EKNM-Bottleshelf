@@ -25,8 +25,10 @@ export class ShowCocktailsComponent implements OnInit {
   ngOnInit(): void {
     this.service.getCocktailsList().toPromise().then(data => { 
       if (data)
-      this.cocktailsList = data;
-      this.sortedData = this.cocktailsList.slice();
+      {
+        this.cocktailsList = data;
+        this.sortedData = this.cocktailsList.slice();
+      }
     })
   }
   
@@ -41,8 +43,10 @@ export class ShowCocktailsComponent implements OnInit {
     this.selectedSize = event.target.value;
     this.service.getCocktailsFilters(this.selectedSize).toPromise().then(data => { 
       if (data)
-      this.cocktailsList = data;
-      this.sortedData = this.cocktailsList.slice();
+      {
+        this.cocktailsList = data;
+        this.sortedData = this.cocktailsList.slice();
+      }
     })
   }
 
@@ -69,6 +73,34 @@ export class ShowCocktailsComponent implements OnInit {
     });
   }
 
+  deleteCocktail(item:CocktailModel){
+    if(confirm(`Are you sure you want to delete dry ${item.id}?`)){
+      this.service.deleteCocktail(item.id).subscribe(res => {
+        var closeModalBtn = document.getElementById('add-edit-modal-close');
+      if(closeModalBtn){
+        closeModalBtn.click();
+      }
+
+      var showDeleteSuccess = document.getElementById('delete-success-alert-cocktail');
+      if(showDeleteSuccess){
+        showDeleteSuccess.style.display = "block";
+      }
+      setTimeout(function(){
+        if(showDeleteSuccess){
+          showDeleteSuccess.style.display = "none"
+        }
+      }, 4000);
+      this.service.getCocktailsList().toPromise().then(data => { 
+        if (data)
+        {
+          this.cocktailsList = data;
+          this.sortedData = this.cocktailsList.slice();
+        }
+      })
+      });
+    }
+  }
+
   modalAdd(){
     this.activateAddCocktailComponent=true;
   }
@@ -76,8 +108,11 @@ export class ShowCocktailsComponent implements OnInit {
     this.activateAddCocktailComponent=false;
     this.service.getCocktailsList().toPromise().then(data => { 
       if (data)
-      this.cocktailsList = data;
-      this.sortedData = this.cocktailsList.slice();})
+      {
+        this.cocktailsList = data;
+        this.sortedData = this.cocktailsList.slice();
+      }
+    })
   }
 
   modalDetails(item:CocktailModel){
@@ -89,8 +124,11 @@ export class ShowCocktailsComponent implements OnInit {
     this.activateCocktailDetailsComponent = false;
     this.service.getCocktailsList().toPromise().then(data => { 
         if (data)
-        this.cocktailsList = data;
-        this.sortedData = this.cocktailsList.slice();})
+        {
+          this.cocktailsList = data;
+          this.sortedData = this.cocktailsList.slice();
+        }
+      })
   }
 
 }

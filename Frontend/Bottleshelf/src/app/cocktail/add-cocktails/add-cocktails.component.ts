@@ -13,7 +13,7 @@ import { IngridientModel } from 'src/models/ingridient.model';
   styleUrls: ['./add-cocktails.component.scss']
 })
 export class AddEditCocktailsComponent implements OnInit {
-  liqSelect:any;
+
   driesList = [] as DryModel[];
   liquidsList = [] as LiquidModel[];
   constructor(private service:CocktailApiService, private dryService:DryApiService, private liqService:LiquidApiService) {
@@ -64,8 +64,28 @@ export class AddEditCocktailsComponent implements OnInit {
     //})
   }
 
-  updateCocktail(){
+  addLiquidIngridient(){
+    let liqtb = document.getElementById("liqTR");
+    let liqtb_prime;
+    if(liqtb)
+    {
+    liqtb_prime = liqtb.cloneNode(true);
+    let htmlToAddLiquids = document.getElementById('htmlToAddLiquids');
+    if(htmlToAddLiquids)
+    htmlToAddLiquids.appendChild(liqtb_prime);
+    }
+  }
 
+  addDryIngridient(){
+    let drytb = document.getElementById("dryTR");
+    let drytb_prime;
+    if(drytb)
+    {
+    drytb_prime = drytb.cloneNode(true);
+    let htmlToAddDries = document.getElementById('htmlToAddDries');
+    if(htmlToAddDries)
+    htmlToAddDries.appendChild(drytb_prime);
+    }
   }
 
 }

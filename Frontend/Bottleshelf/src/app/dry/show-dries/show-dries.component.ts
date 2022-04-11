@@ -122,6 +122,8 @@ export class ShowDriesComponent implements OnInit {
       });
     }
   }
+
+  
   modalEdit(item:DryModel){
     this.dry= item;
     this.modalTitle="Edit Dry";
