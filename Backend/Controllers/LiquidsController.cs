@@ -131,9 +131,14 @@ namespace EKNM_Bottleshelf.Controllers
             {
                 return NotFound();
             }
-            db.Liquids.Remove(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            List<LiquidsTable> liqtable = await db.LiquidsTable.Where(x => x.LiqId == id).ToListAsync();
+            if (liqtable.Count()==0)
+            {
+                db.Liquids.Remove(component);
+                await db.SaveChangesAsync();
+                return Ok(component);
+            }
+            return BadRequest();
         }
     }
 }

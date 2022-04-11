@@ -1,32 +1,43 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CocktailApiService } from 'src/app/services/cocktail-api.service';
+import { CocktailModel } from 'src/models/cocktail.model';
+import { IngridientModel } from 'src/models/ingridient.model';
 import { DryApiService } from 'src/app/services/dry-api.service';
 import { LiquidApiService } from 'src/app/services/liquid-api.service';
-import { CocktailModel } from 'src/models/cocktail.model';
 import { DryModel } from 'src/models/dry.model';
 import { LiquidModel } from 'src/models/liquid.model';
-import { IngridientModel } from 'src/models/ingridient.model';
 
 @Component({
-  selector: 'app-add-cocktails',
-  templateUrl: './add-cocktails.component.html',
-  styleUrls: ['./add-cocktails.component.scss']
+  selector: 'app-update-cocktails',
+  templateUrl: './update-cocktails.component.html',
+  styleUrls: ['./update-cocktails.component.scss']
 })
-export class AddEditCocktailsComponent implements OnInit {
+export class UpdateCocktailsComponent implements OnInit {
 
+  cocktailsList = [] as CocktailModel[];
+  ingridientsTable = [] as IngridientModel[];
   driesList = [] as DryModel[];
   liquidsList = [] as LiquidModel[];
-  constructor(private service:CocktailApiService, private dryService:DryApiService, private liqService:LiquidApiService) {
-   }
 
-   @Input() cocktail:any;
-    id: number = 0;
-    name: string = "";
-    description:string = "";
+  constructor(private service:CocktailApiService, private dryService:DryApiService, private liqService:LiquidApiService) { }
 
+  @Input() cocktail:any;
+  id: number = 0;
+  name: string = "";
+  volumeML:number = 0;
+  description:string = "";
+  degrees:number=0;
+  price:number = 0;
 
   ngOnInit(): void {
-
+    this.id = this.cocktail.id;
+    this.name = this.cocktail.name;
+    this.volumeML = this.cocktail.volumeML;
+    this.description = this.cocktail.description;
+    this.service.getIngridients(this.id).toPromise().then(data => { 
+      if (data)
+      this.ingridientsTable = data;
+    });
     this.dryService.getDriesList().subscribe(datadry => { 
       if (datadry)
     {
@@ -38,19 +49,34 @@ export class AddEditCocktailsComponent implements OnInit {
       if (dataliq)
       this.liquidsList = dataliq;
     })
+    this.service.getPrice(this.id).toPromise().then(data => { 
+      if (data)
+      this.price = data;
+    });
+    this.service.getDegrees(this.id).toPromise().then(data => { 
+      if (data)
+      this.degrees = data;
+    });
   }
 
-  addCocktail(){
+  deleteIngridient(item:IngridientModel){
+    if(confirm(`Are you sure you want to delete ingrieint ${item.name}?`)){
+      this.service.deleteIngridient(this.id,item.name).toPromise();
+      this.service.getIngridients(this.id).toPromise().then(data => { 
+        if (data)
+        this.ingridientsTable = data;
+      });
+    };
+  }
+
+  updateCocktail(){
 
     var cocktail = {
+
       name:this.name,
       description:this.description
     }
-    const drynamesArr = document.querySelectorAll('.drysel');
-    const drygrArr = document.querySelectorAll('.drygr');
-    const liqnamesArr = document.querySelectorAll('.liqsel');
-    const liqmlArr = document.querySelectorAll('.liqml');
-    this.service.addCocktail(cocktail).subscribe(res => {
+    /*this.service.updateCocktail(this.id,cocktail).subscribe(res => {*/
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if(closeModalBtn){
         closeModalBtn.click();
@@ -65,7 +91,7 @@ export class AddEditCocktailsComponent implements OnInit {
           showAddSuccess.style.display = "none"
         }
       }, 4000);
-    })
+    //})
   }
 
   addLiquidIngridient(){

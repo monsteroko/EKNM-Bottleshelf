@@ -34,11 +34,19 @@ export class CocktailApiService {
     return this.http.get<any>(this.APIUrl + `/Cocktails/${id}/cook`);
   }
 
+  addCocktail(data:any){
+    return this.http.post(this.APIUrl + '/cocktails', data);
+  }
+
   updateCocktail(id:number, data:any){
     return this.http.put(this.APIUrl+`/cocktails/${id}`, data);
   }
 
   deleteCocktail(id:number){
     return this.http.delete(this.APIUrl+`/cocktails/${id}`);
+  }
+
+  deleteIngridient(id:number, name:any){
+    return this.http.delete(this.APIUrl+`/cocktails/${id}/ingridient/${name}`);
   }
 }

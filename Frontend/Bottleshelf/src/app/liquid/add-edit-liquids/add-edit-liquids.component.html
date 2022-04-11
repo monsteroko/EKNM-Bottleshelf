@@ -8,8 +8,8 @@
         <input type="text" class="form-control" [(ngModel)]="name" name="name">
     </div>
     <div class="mb-3">
-        <label class="form-label">Price</label>
-        <input type="number" class="form-control" [(ngModel)]="price" name="price">
+        <label class="form-label">Price (in UAH)</label>
+        <input type="number" class="form-control" [(ngModel)]="price" min="0" name="price">
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
@@ -21,15 +21,15 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Bottles</label>
-        <input type="number" class="form-control" [(ngModel)]="bottles" name="bottles">
+        <input type="number" class="form-control" [(ngModel)]="bottles" min="0"  name="bottles">
     </div>
     <div class="mb-3">
-        <label class="form-label">Volume</label>
-        <input type="number" class="form-control" [(ngModel)]="volume" name="volume">
+        <label class="form-label">Volume (in ml)</label>
+        <input type="number" class="form-control" [(ngModel)]="volume" min="0" name="volume">
     </div>
     <div class="mb-3">
         <label class="form-label">Degree</label>
-        <input type="number" class="form-control" [(ngModel)]="degree" name="degree">
+        <input type="number" class="form-control" [(ngModel)]="degree" min="0" max="100" name="degree">
     </div>
     <button (click)="addLiquid()" *ngIf="liquid.id==0" class="btn btn-primary">
         Add

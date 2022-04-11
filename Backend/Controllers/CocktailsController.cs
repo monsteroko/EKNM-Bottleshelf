@@ -93,9 +93,13 @@ namespace EKNM_Bottleshelf.Controllers
             cocktail.Id = component.Id;
             cocktail.Name = component.Name;
             cocktail.Description = component.Description;
-            allLiquids.ForEach(ingridient => {
-                cocktail.VolumeML += ingridient.Amount;
-            });
+            if (allLiquids != null)
+            {
+                allLiquids.ForEach(ingridient =>
+                {
+                    cocktail.VolumeML += ingridient.Amount;
+                });
+            }
             return new ObjectResult(cocktail);
         }
 
@@ -107,26 +111,31 @@ namespace EKNM_Bottleshelf.Controllers
             List<RecipeDTO> recipes = new List<RecipeDTO>();
             List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
             List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
-            allDries.ForEach(ingridient => {
-                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
-
-                recipes.Add(new RecipeDTO
+            if ((allDries != null) && (allLiquids != null))
+            {
+                allDries.ForEach(ingridient =>
                 {
-                    Name = dryIngridient?.Name,
-                    Amount = ingridient.Amount,
-                    IsSolid = true
-                });
-                });
-            allLiquids.ForEach(ingridient => {
-                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                    Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
 
-                recipes.Add(new RecipeDTO
-                {
-                    Name = liquidIngridient?.Name,
-                    Amount = ingridient.Amount,
-                    IsSolid = false
+                    recipes.Add(new RecipeDTO
+                    {
+                        Name = dryIngridient?.Name,
+                        Amount = ingridient.Amount,
+                        IsSolid = true
+                    });
                 });
-            });
+                allLiquids.ForEach(ingridient =>
+                {
+                    Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+
+                    recipes.Add(new RecipeDTO
+                    {
+                        Name = liquidIngridient?.Name,
+                        Amount = ingridient.Amount,
+                        IsSolid = false
+                    });
+                });
+            }
             return recipes;
         }
 
@@ -138,28 +147,33 @@ namespace EKNM_Bottleshelf.Controllers
             double price = 0;
             List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
             List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
-            allDries.ForEach(ingridient => {
-                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
-                if (dryIngridient.Weight != null)
+            if ((allDries != null) && (allLiquids != null))
+            {
+                allDries.ForEach(ingridient =>
                 {
-                    price += dryIngridient.Price / (double)dryIngridient.Weight * ingridient.Amount;
-                }
-                else
+                    Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+                    if (dryIngridient.Weight != null)
+                    {
+                        price += dryIngridient.Price / (double)dryIngridient.Weight * ingridient.Amount;
+                    }
+                    else
+                    {
+                        price += dryIngridient.Price * ingridient.Amount;
+                    }
+                });
+                allLiquids.ForEach(ingridient =>
                 {
-                    price += dryIngridient.Price * ingridient.Amount;
-                }
-            });
-            allLiquids.ForEach(ingridient => {
-                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
-                if (liquidIngridient.Volume != 0)
-                {
-                    price += liquidIngridient.Price / (double)liquidIngridient.Volume * ingridient.Amount;
-                }
-                else
-                {
-                    price += liquidIngridient.Price * ingridient.Amount;
-                }
-            });
+                    Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                    if (liquidIngridient.Volume != 0)
+                    {
+                        price += liquidIngridient.Price / (double)liquidIngridient.Volume * ingridient.Amount;
+                    }
+                    else
+                    {
+                        price += liquidIngridient.Price * ingridient.Amount;
+                    }
+                });
+            }
             return Math.Round(price,2);
         }
 
@@ -172,19 +186,23 @@ namespace EKNM_Bottleshelf.Controllers
             double alcovol = 0;
             double degrees = 0;
             List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
-            allLiquids.ForEach(ingridient => {
-                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
-                if (liquidIngridient.Degree == 0)
+            if (allLiquids != null)
+            {
+                allLiquids.ForEach(ingridient =>
                 {
-                    totalvol += ingridient.Amount;
-                }
-                else
-                {
-                    totalvol += ingridient.Amount;
-                    alcovol += liquidIngridient.Degree/100 * ingridient.Amount;
-                }
-            });
-            degrees = alcovol / totalvol*100;
+                    Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                    if (liquidIngridient.Degree == 0)
+                    {
+                        totalvol += ingridient.Amount;
+                    }
+                    else
+                    {
+                        totalvol += ingridient.Amount;
+                        alcovol += liquidIngridient.Degree / 100 * ingridient.Amount;
+                    }
+                });
+                degrees = alcovol / totalvol * 100;
+            }
             return Math.Round(degrees, 2);
         }
 
@@ -230,37 +248,81 @@ namespace EKNM_Bottleshelf.Controllers
             bool enoughcomponents = true;
             List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
             List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
-            allDries.ForEach(ingridient => {
-                Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
-                if (dryIngridient.Amount < ingridient.Amount)
-                {
-                    enoughcomponents = false;
-                }
-            });
-            allLiquids.ForEach(ingridient => {
-                Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
-                if (liquidIngridient.Amount < ingridient.Amount)
-                {
-                    enoughcomponents = false;
-                }
-            });
-            if (enoughcomponents)
+            if ((allDries != null) && (allLiquids != null))
             {
-                allDries.ForEach(ingridient => {
+                allDries.ForEach(ingridient =>
+                {
                     Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
-                    dryIngridient.Amount = dryIngridient.Amount - ingridient.Amount;
+                    if (dryIngridient.Amount < ingridient.Amount)
+                    {
+                        enoughcomponents = false;
+                    }
                 });
-                allLiquids.ForEach(ingridient => {
+                allLiquids.ForEach(ingridient =>
+                {
                     Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
-                    liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
+                    if (liquidIngridient.Amount < ingridient.Amount)
+                    {
+                        enoughcomponents = false;
+                    }
                 });
-                return "Cooked";
-            }
-            if (!enoughcomponents)
-            {
-                return "No components";
+                if (enoughcomponents)
+                {
+                    allDries.ForEach(ingridient =>
+                    {
+                        Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
+                        dryIngridient.Amount = dryIngridient.Amount - ingridient.Amount;
+                    });
+                    allLiquids.ForEach(ingridient =>
+                    {
+                        Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
+                        liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
+                    });
+                    return "Cooked";
+                }
+                if (!enoughcomponents)
+                {
+                    return "No components";
+                }
             }
             return BadRequest();
+        }
+
+        // Delete ingridient
+        // DELETE api/Cocktails/5/ingridient/garlic
+        [HttpDelete("{id}/ingridient/{name}")]
+        public async Task<ActionResult<Cocktail>> Delete(int id, string name)
+        {
+            Cocktail component = db.Cocktails.FirstOrDefault(x => x.Id == id);
+            if (component == null)
+            {
+                return NotFound();
+            }
+            List<DriesTable> allDries = await db.DriesTable.Where(x => x.CockId == id).ToListAsync();
+            List<LiquidsTable> allLiquids = await db.LiquidsTable.Where(x => x.CockId == id).ToListAsync();
+            if ((allDries != null) && (allLiquids != null))
+            {
+                Dry dry = db.Dries.FirstOrDefault(ingridient => ingridient.Name == name);
+                if (dry != null)
+                {
+                    allDries.ForEach(drycomp =>
+                    {
+                        if ((drycomp.DryId == dry.Id) && (drycomp.CockId == component.Id))
+                            db.DriesTable.Remove(drycomp);
+                    });
+                }
+                Liquid liquid = db.Liquids.FirstOrDefault(ingridient => ingridient.Name == name);
+                if (liquid != null)
+                {
+                    allLiquids.ForEach(liqcomp =>
+                    {
+                        if ((liqcomp.LiqId == liquid.Id) && (liqcomp.CockId == component.Id))
+                            db.LiquidsTable.Remove(liqcomp);
+                    });
+                }
+            }
+            await db.SaveChangesAsync();
+            return Ok(component);
         }
 
         // Delete coctail

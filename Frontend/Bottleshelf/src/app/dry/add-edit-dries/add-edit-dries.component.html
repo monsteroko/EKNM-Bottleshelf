@@ -8,24 +8,24 @@
         <input type="text" class="form-control" [(ngModel)]="name" name="name">
     </div>
     <div class="mb-3">
-        <label class="form-label">Price</label>
-        <input type="number" class="form-control" [(ngModel)]="price" name="price">
+        <label class="form-label">Price (in UAH)</label>
+        <input type="number" class="form-control" [(ngModel)]="price" min="0" name="price">
     </div>
     <div class="mb-3">
         <label class="form-label">Description</label>
         <input type="text" class="form-control" [(ngModel)]="description" name="description">
     </div>
     <div class="mb-3">
-        <label class="form-label">Amount in packs</label>
+        <label class="form-label">Total amount</label>
         <input type="number" class="form-control" [(ngModel)]="amount" name="amount" readonly>
     </div>
     <div class="mb-3">
         <label class="form-label">Packages</label>
-        <input type="number" class="form-control" [(ngModel)]="packs" name="packs">
+        <input type="number" class="form-control" [(ngModel)]="packs" min="0" name="packs">
     </div>
     <div class="mb-3">
-        <label class="form-label">Volume</label>
-        <input type="number" class="form-control" [(ngModel)]="weight" name="volume">
+        <label class="form-label">Package weight (in gr)</label>
+        <input type="number" class="form-control" [(ngModel)]="weight" min="0" name="volume">
     </div>
     <button (click)="addDry()" *ngIf="dry.id==0" class="btn btn-primary">
         Add

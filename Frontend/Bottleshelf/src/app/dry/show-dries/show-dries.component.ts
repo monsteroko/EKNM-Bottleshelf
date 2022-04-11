@@ -117,7 +117,10 @@ export class ShowDriesComponent implements OnInit {
       }, 4000);
       this.service.getDriesList().toPromise().then(data => { 
         if (data)
+        {
         this.driesList = data;
+        this.sortedData = this.driesList.slice();
+        }
       })
       });
     }
@@ -133,7 +136,10 @@ export class ShowDriesComponent implements OnInit {
     this.activateAddEditDryComponent = false;
     this.service.getDriesList().toPromise().then(data => { 
         if (data)
-        this.driesList = data;})
+        {
+          this.driesList = data;
+          this.sortedData = this.driesList.slice();
+          };})
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

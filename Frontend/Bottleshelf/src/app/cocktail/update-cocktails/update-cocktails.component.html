@@ -1,0 +1,99 @@
+<form>
+    <div class="mb-3" *ngIf="cocktail.id!=0">
+        <label class="form-label">Id</label>
+        <input type="text" class="form-control " [(ngModel)]="id" name="id" readonly>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" [(ngModel)]="name" name="name">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Description</label>
+        <input type="text" class="form-control" [(ngModel)]="description" name="description">
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Ingridients</label>
+        <table class="table table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Options</th>
+            </thead>
+            <tbody *ngFor="let item of ingridientsTable" >
+                <tr>
+                    <td >{{item.name}}</td>
+                    <td *ngIf="item.isSolid">{{item.amount}} gr</td>
+                    <td  *ngIf="!item.isSolid">{{item.amount}} ml</td>
+                    <td  *ngIf="item.isSolid">Dry</td>
+                    <td  *ngIf="!item.isSolid">Liquid</td>
+                    <td>
+                        <button class="btn btn-outline-danger me-2 mb-1" (click)="deleteIngridient(item)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                              </svg>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Liquid Ingridients</label>
+        <button (click)="addLiquidIngridient()" class="btn btn-primary">
+            +
+        </button>
+        <table class="table table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Amount</th>
+            </thead>
+            <tbody id="htmlToAddLiquids">
+                <tr id="liqTR">
+                    <td>
+                        <select  class="form-control" name="Liquids">
+                            <option disabled selected>Select liquid</option>
+                            <option [value]="liq.id" *ngFor="let liq of liquidsList">
+                                {{liq.name}}    
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> ml
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Dry Ingridients</label>                
+        <button (click)="addDryIngridient()" class="btn btn-primary">
+            +
+        </button>
+        <table class="table table-hover">
+            <thead>
+                <th>Name</th>
+                <th>Amount</th>
+            </thead>
+            <tbody id="htmlToAddDries">
+                <tr id="dryTR">
+                    <td>
+                        <select  class="form-control" name="dries">
+                            <option disabled selected>Select dry</option>
+                            <option [value]="dry.id" *ngFor="let dry of driesList">
+                                {{dry.name}}    
+                            </option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> gr
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button (click)="updateCocktail()" class="btn btn-primary">
+        Add
+    </button>
+</form>

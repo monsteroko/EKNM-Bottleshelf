@@ -41,7 +41,7 @@ export class AddEditLiquidsComponent implements OnInit {
       name:this.name,
       price:this.price,
       description:this.description,
-      amount:this.liquid.bottles * this.liquid.volume,
+      amount:this.bottles * this.volume,
       volume:this.volume,
       degree:this.degree,
     }
@@ -71,7 +71,7 @@ export class AddEditLiquidsComponent implements OnInit {
       name:this.name,
       price:this.price,
       description:this.description,
-      amount:this.amount,
+      amount:this.volume*this.bottles,
       volume:this.volume,
       degree:this.degree,
     }

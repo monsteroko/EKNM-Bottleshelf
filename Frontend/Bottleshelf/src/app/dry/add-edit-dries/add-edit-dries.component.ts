@@ -38,7 +38,7 @@ export class AddEditDriesComponent implements OnInit {
       name:this.name,
       price:this.price,
       description:this.description,
-      amount:this.dry.packs * this.dry.weight,
+      amount:this.packs * this.weight,
       weight:this.weight
     }
     this.service.addDry(dry).subscribe(res => {

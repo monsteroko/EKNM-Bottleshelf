@@ -21,8 +21,10 @@ export class ShowLiquidsComponent implements OnInit {
   ngOnInit(): void {
     this.service.getLiquidsList().toPromise().then(data => { 
       if (data)
+      {
       this.liquidsList = data;
       this.sortedData = this.liquidsList.slice();
+      }
     })
 
   }
@@ -120,7 +122,10 @@ export class ShowLiquidsComponent implements OnInit {
       }, 4000);
       this.service.getLiquidsList().toPromise().then(data => { 
         if (data)
-        this.liquidsList = data;
+        {
+          this.liquidsList = data;
+          this.sortedData = this.liquidsList.slice();
+          }
       })
       });
     }
@@ -134,7 +139,11 @@ export class ShowLiquidsComponent implements OnInit {
     this.activateAddEditLiquidComponent = false;
     this.service.getLiquidsList().toPromise().then(data => { 
         if (data)
-        this.liquidsList = data;})
+        {
+          this.liquidsList = data;
+          this.sortedData = this.liquidsList.slice();
+          }
+        })
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

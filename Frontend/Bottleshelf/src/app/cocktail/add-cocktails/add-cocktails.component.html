@@ -20,7 +20,7 @@
             <tbody id="htmlToAddLiquids">
                 <tr id="liqTR">
                     <td>
-                        <select  class="form-control" name="Liquids">
+                        <select  class="form-control liqsel" name="Liquids">
                             <option disabled selected>Select liquid</option>
                             <option [value]="liq.id" *ngFor="let liq of liquidsList">
                                 {{liq.name}}    
@@ -28,7 +28,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> ml
+                        <input class="liqml" type="number" id="quantity" name="quantity" min="1"> ml
                     </td>
                 </tr>
             </tbody>
@@ -47,7 +47,7 @@
             <tbody id="htmlToAddDries">
                 <tr id="dryTR">
                     <td>
-                        <select  class="form-control" name="dries">
+                        <select  class="form-control drysel" name="dries">
                             <option disabled selected>Select dry</option>
                             <option [value]="dry.id" *ngFor="let dry of driesList">
                                 {{dry.name}}    
@@ -55,7 +55,7 @@
                         </select>
                     </td>
                     <td>
-                        <input type="number" id="quantity" name="quantity" min="1" max="1000"> gr
+                        <input class="drygr" type="number" id="quantity" name="quantity" min="0"> gr
                     </td>
                 </tr>
             </tbody>

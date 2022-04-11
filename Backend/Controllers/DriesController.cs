@@ -128,9 +128,14 @@ namespace EKNM_Bottleshelf.Controllers
             {
                 return NotFound();
             }
-            db.Dries.Remove(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            List<DriesTable> drytable = await db.DriesTable.Where(x => x.DryId == id).ToListAsync();
+            if (drytable.Count()==0)
+            {
+                db.Dries.Remove(component);
+                await db.SaveChangesAsync();
+                return Ok(component);
+            }
+            return BadRequest();
         }
     }
 }

@@ -15,9 +15,9 @@
             <th mat-sort-header="name">Name</th>
             <th mat-sort-header="price">Price</th>
             <th mat-sort-header="description">Description</th>
-            <th mat-sort-header="weight">Weight</th>
-            <th mat-sort-header="amount">Total</th>
+            <th mat-sort-header="weight">Weight</th>            
             <th mat-sort-header="packs">Packages</th>
+            <th mat-sort-header="amount">Total</th>
             <th>Options</th>
         </thead>
         <tbody *ngFor="let item of sortedData">
@@ -25,10 +25,9 @@
                 <td>{{item.name}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.description}}</td>
-                <td>{{item.weight}} gr</td>
+                <td>{{item.weight}} gr</td>                
+                <td>{{item.packs}}</td>
                 <td>{{item.amount}} gr</td>           
-                <td *ngIf="item.packs > 1" >{{item.packs}}</td>
-                <td *ngIf="item.packs <= 1" class="bg-danger">{{item.packs}}</td>
                 <td>
                     <button class="btn btn-outline-primary me-2 mb-1" (click)="modalEdit(item)" data-bs-toggle="modal" data-bs-target="#addDry">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">

@@ -36,6 +36,7 @@ export class ShowCocktailsComponent implements OnInit {
   modalTitle:string = '';
   activateCocktailDetailsComponent:boolean = false;
   activateAddCocktailComponent:boolean = false;
+  activateUpdateCocktailComponent:boolean = false;
   cocktail!:CocktailModel;
   selectedSize: number = 0;
 
@@ -101,7 +102,7 @@ export class ShowCocktailsComponent implements OnInit {
     }
   }
 
-  modalAdd(){
+  AddCocktail(){
     this.activateAddCocktailComponent=true;
   }
   addModalClose() {
@@ -115,12 +116,31 @@ export class ShowCocktailsComponent implements OnInit {
     })
   }
 
-  modalDetails(item:CocktailModel){
+  updateCocktail(item:CocktailModel){
+    if(item)
+    {
     this.cocktail= item;
-    this.modalTitle="Cocktail details";
-    this.activateCocktailDetailsComponent=true;
+    this.modalTitle='Update ' + this.cocktail.name;
+    this.activateUpdateCocktailComponent=true;
+    }
   }
   updateModalClose() {
+    this.activateUpdateCocktailComponent=false;
+    this.service.getCocktailsList().toPromise().then(data => { 
+      if (data)
+      {
+        this.cocktailsList = data;
+        this.sortedData = this.cocktailsList.slice();
+      }
+    })
+  }
+
+  modalDetails(item:CocktailModel){
+    this.cocktail= item;
+    this.modalTitle=this.cocktail.name + " details";
+    this.activateCocktailDetailsComponent=true;
+  }
+  detailsModalClose() {
     this.activateCocktailDetailsComponent = false;
     this.service.getCocktailsList().toPromise().then(data => { 
         if (data)
