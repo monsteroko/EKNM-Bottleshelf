@@ -3,7 +3,7 @@ import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 import {Sort} from '@angular/material/sort';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import autoTable, { RowInput } from 'jspdf-autotable';
 
 @Component({
   selector: 'app-show-dries',
@@ -23,7 +23,11 @@ export class ShowDriesComponent implements OnInit {
       if (data)
       this.driesList = data;
       this.sortedData = this.driesList.slice();
-    })
+    });
+    this.service.getDriesToBuy().toPromise().then(data => { 
+      if (data)
+      this.driesToBuy = data;
+    });
 
   }
 
@@ -33,15 +37,10 @@ export class ShowDriesComponent implements OnInit {
   dry!:DryModel;
 
   buyDries(){
-    this.service.getDriesToBuy().toPromise().then(data => { 
-      if (data)
-      this.driesToBuy = data;
-    })
     const head = [['Name', 'Volume', 'Price']]
-    const db : [[string, number, number]]= [['Buy beer',500,25]];
+    const db = [] as RowInput[]; 
     this.driesToBuy.forEach(element =>{
-      var str: [string, number, number] = [element.name,element.weight,element.price];
-      db.push(str);
+      db.push([element.name,element.weight,element.price] as RowInput);
     }
     );
     const doc = new jsPDF();
@@ -121,7 +120,11 @@ export class ShowDriesComponent implements OnInit {
         this.driesList = data;
         this.sortedData = this.driesList.slice();
         }
-      })
+      });
+      this.service.getDriesToBuy().toPromise().then(data => { 
+        if (data)
+        this.driesToBuy = data;
+      });
       });
     }
   }
@@ -135,11 +138,15 @@ export class ShowDriesComponent implements OnInit {
   modalClose() {
     this.activateAddEditDryComponent = false;
     this.service.getDriesList().toPromise().then(data => { 
-        if (data)
-        {
-          this.driesList = data;
-          this.sortedData = this.driesList.slice();
-          };})
+      if (data)
+      {
+        this.driesList = data;
+        this.sortedData = this.driesList.slice();
+        };})
+    this.service.getDriesToBuy().toPromise().then(data => { 
+      if (data)
+      this.driesToBuy = data;
+    });
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

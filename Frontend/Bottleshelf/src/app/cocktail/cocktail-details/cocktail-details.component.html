@@ -1,8 +1,4 @@
 <form>
-    <div class="mb-3" *ngIf="cocktail.id!=0">
-        <label class="form-label">Id</label>
-        <input type="text" class="form-control " [(ngModel)]="id" name="id" readonly>
-    </div>
     <div class="mb-3">
         <label class="form-label">Name</label>
         <input type="text" class="form-control" [(ngModel)]="name" name="name" readonly>
@@ -42,7 +38,7 @@
             </tbody>
         </table>
     </div>
-    <button (click)="Cook()" *ngIf="cocktail.id!=0" class="btn btn-primary">
-        Make
+    <button (click)="Cook()" class="btn btn-primary">
+        Cook
     </button>
 </form>

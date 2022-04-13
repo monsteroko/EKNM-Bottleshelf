@@ -241,8 +241,8 @@ namespace EKNM_Bottleshelf.Controllers
         }
 
         //Cook cocktail
-        // PUT api/Cocktails/5/cook
-        [HttpPut("{id}/cook")]
+        // GET api/Cocktails/5/cook
+        [HttpGet("{id}/cook")]
         public async Task<ActionResult<string>> Cook(int id)
         {
             bool enoughcomponents = true;
@@ -278,11 +278,11 @@ namespace EKNM_Bottleshelf.Controllers
                         Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
                         liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
                     });
-                    return "Cooked";
+                    return Ok();
                 }
                 if (!enoughcomponents)
                 {
-                    return "No components";
+                    return Conflict();
                 }
             }
             return BadRequest();

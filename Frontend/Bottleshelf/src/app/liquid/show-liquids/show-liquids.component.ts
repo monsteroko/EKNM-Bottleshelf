@@ -3,15 +3,16 @@ import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
 import {Sort} from '@angular/material/sort';
 import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import autoTable, { RowInput } from 'jspdf-autotable';
 
 @Component({
   selector: 'app-show-liquids',
   templateUrl: './show-liquids.component.html',
   styleUrls: ['./show-liquids.component.scss']
 })
-export class ShowLiquidsComponent implements OnInit {
 
+export class ShowLiquidsComponent implements OnInit {
+  
   liquidsList = [] as LiquidModel[];
   sortedData = [] as LiquidModel[];
   liquidsToBuy = [] as LiquidModel[];
@@ -25,7 +26,11 @@ export class ShowLiquidsComponent implements OnInit {
       this.liquidsList = data;
       this.sortedData = this.liquidsList.slice();
       }
-    })
+    });
+    this.service.getLiquidsToBuy().toPromise().then(data => { 
+      if (data)
+      this.liquidsToBuy = data;
+    });
 
   }
 
@@ -65,15 +70,10 @@ export class ShowLiquidsComponent implements OnInit {
   }
 
   buyLiquids(){
-    this.service.getLiquidsToBuy().toPromise().then(data => { 
-      if (data)
-      this.liquidsToBuy = data;
-    })
     const head = [['Name', 'Volume', 'Price']]
-    const db : [[string, number, number]]= [['Buy beer',500,25]];
+    const db = [] as RowInput[]; 
     this.liquidsToBuy.forEach(element =>{
-      var str: [string, number, number] = [element.name,element.volume,element.price];
-      db.push(str);
+      db.push([element.name,element.volume,element.price] as RowInput);
     }
     );
     const doc = new jsPDF()
@@ -128,6 +128,10 @@ export class ShowLiquidsComponent implements OnInit {
           }
       })
       });
+      this.service.getLiquidsToBuy().toPromise().then(data => { 
+        if (data)
+        this.liquidsToBuy = data;
+      });
     }
   }
   modalEdit(item:LiquidModel){
@@ -144,6 +148,10 @@ export class ShowLiquidsComponent implements OnInit {
           this.sortedData = this.liquidsList.slice();
           }
         })
+    this.service.getLiquidsToBuy().toPromise().then(data => { 
+      if (data)
+      this.liquidsToBuy = data;
+    });
   }
 }
 function compare(a: number | string, b: number | string, isAsc: boolean) {

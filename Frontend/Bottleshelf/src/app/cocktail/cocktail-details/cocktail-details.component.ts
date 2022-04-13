@@ -42,21 +42,41 @@ export class CocktailDetailsComponent implements OnInit {
 
   Cook(){
     this.service.cook(this.cocktail.id).subscribe(res => {
-      var closeModalBtn = document.getElementById('add-edit-modal-close');
-      if(closeModalBtn){
-        closeModalBtn.click();
-      }
-
-      var showAddSuccess = document.getElementById('cook-success-alert-cocktail');
-      if(showAddSuccess){
-        showAddSuccess.style.display = "block";
-      }
-      setTimeout(function(){
-        if(showAddSuccess){
-          showAddSuccess.style.display = "none"
+      if(res.status==200)
+      {
+        var closeModalBtn = document.getElementById('add-edit-modal-close');
+        if(closeModalBtn){
+          closeModalBtn.click();
         }
-      }, 4000);
-    })
+
+        var showAddSuccess = document.getElementById('cook-success-alert-cocktail');
+        if(showAddSuccess){
+          showAddSuccess.style.display = "block";
+        }
+        setTimeout(function(){
+          if(showAddSuccess){
+            showAddSuccess.style.display = "none"
+          }
+        }, 4000);
+      }
+      else if(res.status==409){
+        var closeModalBtn = document.getElementById('add-edit-modal-close');
+        if(closeModalBtn){
+          closeModalBtn.click();
+        }
+
+        var showAddSuccess = document.getElementById('cook-unsuccess-alert-cocktail');
+        if(showAddSuccess){
+          showAddSuccess.style.display = "block";
+        }
+        setTimeout(function(){
+          if(showAddSuccess){
+            showAddSuccess.style.display = "none"
+          }
+        }, 4000);
+      }
+    }
+    )
   }
 
 }
