@@ -41,8 +41,8 @@ export class CocktailDetailsComponent implements OnInit {
   }
 
   Cook(){
-    this.service.cook(this.cocktail.id).subscribe(res => {
-      if(res.status==200)
+    this.service.cook(this.cocktail.id).subscribe((res) => {},(error) =>{
+      if(error.status==200)
       {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if(closeModalBtn){
@@ -59,7 +59,7 @@ export class CocktailDetailsComponent implements OnInit {
           }
         }, 4000);
       }
-      else if(res.status==409){
+      else if(error.status==409){
         var closeModalBtn = document.getElementById('add-edit-modal-close');
         if(closeModalBtn){
           closeModalBtn.click();

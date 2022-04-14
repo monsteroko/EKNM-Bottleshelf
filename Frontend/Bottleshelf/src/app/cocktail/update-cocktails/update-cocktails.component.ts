@@ -18,6 +18,8 @@ export class UpdateCocktailsComponent implements OnInit {
   ingridientsTable = [] as IngridientModel[];
   driesList = [] as DryModel[];
   liquidsList = [] as LiquidModel[];
+  dryCount : number = 0;
+  liqCount : number = 0;
 
   constructor(private service:CocktailApiService, private dryService:DryApiService, private liqService:LiquidApiService) { }
 
@@ -60,7 +62,7 @@ export class UpdateCocktailsComponent implements OnInit {
   }
 
   deleteIngridient(item:IngridientModel){
-    if(confirm(`Are you sure you want to delete ingrieint ${item.name}?`)){
+    if(confirm(`Are you sure you want to delete ingridient ${item.name}?`)){
       this.service.deleteIngridient(this.id,item.name).toPromise();
       this.service.getIngridients(this.id).toPromise().then(data => { 
         if (data)
@@ -71,18 +73,40 @@ export class UpdateCocktailsComponent implements OnInit {
 
   updateCocktail(){
 
-    var cocktail = {
+    let dries: {[key:number]:number;}={};
+    let liquids: {[key:number]:number;}={};
 
-      name:this.name,
-      description:this.description
+    for (var _i = 0; _i < this.dryCount; _i++) {
+      var dryselvalue = (<HTMLSelectElement>document.getElementById("drysel_"+_i)).value;
+      var drynumvalue = (<HTMLSelectElement>document.getElementById("drygr_"+_i)).value;
+      if(dryselvalue && drynumvalue)
+      {
+        dries[Number(dryselvalue)]=Number(drynumvalue);
+      }
     }
-    /*this.service.updateCocktail(this.id,cocktail).subscribe(res => {*/
-      var closeModalBtn = document.getElementById('add-edit-modal-close');
+
+    for (var _i = 0; _i < this.liqCount; _i++) {
+      var liqselvalue = (<HTMLSelectElement>document.getElementById("liqsel_"+_i)).value;
+      var liqnumvalue = (<HTMLSelectElement>document.getElementById("liqml_"+_i)).value;
+      if(liqselvalue && liqnumvalue)
+      {
+        liquids[Number(liqselvalue)]=Number(liqnumvalue);
+      }
+    }
+
+    var cocktail = {
+      name:this.name,
+      description:this.description,
+      drymap: dries,
+      liqmap: liquids
+    }
+    this.service.updateCocktail(this.id,cocktail).subscribe(res => {
+      var closeModalBtn = document.getElementById('update-edit-modal-close');
       if(closeModalBtn){
         closeModalBtn.click();
       }
 
-      var showAddSuccess = document.getElementById('add-success-alert-cocktail');
+      var showAddSuccess = document.getElementById('update-success-alert-cocktail');
       if(showAddSuccess){
         showAddSuccess.style.display = "block";
       }
@@ -91,31 +115,21 @@ export class UpdateCocktailsComponent implements OnInit {
           showAddSuccess.style.display = "none"
         }
       }, 4000);
-    //})
+    })
   }
 
   addLiquidIngridient(){
-    let liqtb = document.getElementById("liqTR");
-    let liqtb_prime;
-    if(liqtb)
-    {
-    liqtb_prime = liqtb.cloneNode(true);
-    let htmlToAddLiquids = document.getElementById('htmlToAddLiquids');
-    if(htmlToAddLiquids)
-    htmlToAddLiquids.appendChild(liqtb_prime);
-    }
+    this.liqCount++;
+  }
+  deleteLiquidIngridient(){
+    this.liqCount--;
   }
 
   addDryIngridient(){
-    let drytb = document.getElementById("dryTR");
-    let drytb_prime;
-    if(drytb)
-    {
-    drytb_prime = drytb.cloneNode(true);
-    let htmlToAddDries = document.getElementById('htmlToAddDries');
-    if(htmlToAddDries)
-    htmlToAddDries.appendChild(drytb_prime);
-    }
+    this.dryCount++;
+  }
+  deleteDryIngridient(){
+    this.dryCount--;
   }
 
 }

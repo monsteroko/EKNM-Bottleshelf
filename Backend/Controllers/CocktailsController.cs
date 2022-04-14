@@ -209,40 +209,99 @@ namespace EKNM_Bottleshelf.Controllers
         // Add cocktail
         // POST api/Cocktails
         [HttpPost]
-        public async Task<ActionResult<Cocktail>> Post(Cocktail component)
+        public async Task<ActionResult<AddCocktailDTO>> AddCocktail(AddCocktailDTO newCocktail)
         {
-            if (component == null)
+            try
             {
-                return BadRequest();
+                if (newCocktail == null)
+                {
+                    return BadRequest();
+                }
+                Cocktail cocktail = new Cocktail();
+                cocktail.Description = newCocktail.Description;
+                cocktail.Name = newCocktail.Name;
+                db.Cocktails.Add(cocktail);
+                await db.SaveChangesAsync();
+                if (cocktail.Id != 0)
+                {
+                    foreach (var ingridient in newCocktail.drymap)
+                    {
+                        DriesTable dry = new DriesTable();
+                        dry.CockId = cocktail.Id;
+                        dry.DryId = ingridient.Key;
+                        dry.Amount = ingridient.Value;
+                        db.DriesTable.Add(dry);
+                    }
+                    foreach (var ingridient in newCocktail.liqmap)
+                    {
+                        LiquidsTable liquid = new LiquidsTable();
+                        liquid.CockId = cocktail.Id;
+                        liquid.LiqId = ingridient.Key;
+                        liquid.Amount = ingridient.Value;
+                        db.LiquidsTable.Add(liquid);
+                    }
+                    await db.SaveChangesAsync();
+                }
+                
             }
-
-            db.Cocktails.Add(component);
-            await db.SaveChangesAsync();
-            return Ok(component);
+            catch(Exception ex) {
+                return BadRequest(ex.ToString());
+            }
+            return Ok(newCocktail);
         }
-
         //Update cocktail
         // PUT api/Cocktails/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Cocktail>> Put(Cocktail component)
+        public async Task<ActionResult<Cocktail>> Put(int id, AddCocktailDTO component)
         {
-            if (component == null)
+            try
             {
-                return BadRequest();
-            }
-            if (!db.Cocktails.Any(x => x.Id == component.Id))
-            {
-                return NotFound();
-            }
+                if (component == null)
+                {
+                    return BadRequest();
+                }
+                if (!db.Cocktails.Any(x => x.Id == id))
+                {
+                    return NotFound();
+                }
+                Cocktail cocktail = new Cocktail();
+                cocktail.Id = id;
+                cocktail.Description = component.Description;
+                cocktail.Name = component.Name;
+                db.Cocktails.Update(cocktail);
+                await db.SaveChangesAsync();
+                if (id != 0)
+                {
+                    foreach (var ingridient in component.drymap)
+                    {
+                        DriesTable dry = new DriesTable();
+                        dry.CockId = cocktail.Id;
+                        dry.DryId = ingridient.Key;
+                        dry.Amount = ingridient.Value;
+                        db.DriesTable.Add(dry);
+                    }
+                    foreach (var ingridient in component.liqmap)
+                    {
+                        LiquidsTable liquid = new LiquidsTable();
+                        liquid.CockId = cocktail.Id;
+                        liquid.LiqId = ingridient.Key;
+                        liquid.Amount = ingridient.Value;
+                        db.LiquidsTable.Add(liquid);
+                    }
+                    await db.SaveChangesAsync();
+                }
 
-            db.Update(component);
-            await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
             return Ok(component);
         }
 
         //Cook cocktail
-        // GET api/Cocktails/5/cook
-        [HttpGet("{id}/cook")]
+        // PUT api/Cocktails/5/cook
+        [HttpPut("{id}/cook")]
         public async Task<ActionResult<string>> Cook(int id)
         {
             bool enoughcomponents = true;
@@ -268,16 +327,23 @@ namespace EKNM_Bottleshelf.Controllers
                 });
                 if (enoughcomponents)
                 {
+                    List<Dry> cocktailDries = new List<Dry>();
+                    List<Liquid> cocktailLiquids = new List<Liquid>();
                     allDries.ForEach(ingridient =>
                     {
                         Dry dryIngridient = db.Dries.FirstOrDefault(dry => dry.Id == ingridient.DryId);
                         dryIngridient.Amount = dryIngridient.Amount - ingridient.Amount;
+                        cocktailDries.Add(dryIngridient);
                     });
                     allLiquids.ForEach(ingridient =>
                     {
                         Liquid liquidIngridient = db.Liquids.FirstOrDefault(liq => liq.Id == ingridient.LiqId);
                         liquidIngridient.Amount = liquidIngridient.Amount - ingridient.Amount;
+                        cocktailLiquids.Add(liquidIngridient);
                     });
+                    db.Dries.UpdateRange(cocktailDries);
+                    db.Liquids.UpdateRange(cocktailLiquids);
+                    await db.SaveChangesAsync();
                     return Ok();
                 }
                 if (!enoughcomponents)

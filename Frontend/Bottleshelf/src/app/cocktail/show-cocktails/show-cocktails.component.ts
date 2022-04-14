@@ -75,7 +75,7 @@ export class ShowCocktailsComponent implements OnInit {
   }
 
   deleteCocktail(item:CocktailModel){
-    if(confirm(`Are you sure you want to delete dry ${item.id}?`)){
+    if(confirm(`Are you sure you want to delete cocktail ${item.id}?`)){
       this.service.deleteCocktail(item.id).subscribe(res => {
         var closeModalBtn = document.getElementById('add-edit-modal-close');
       if(closeModalBtn){

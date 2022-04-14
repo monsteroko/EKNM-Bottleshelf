@@ -12,25 +12,30 @@
         <button (click)="addLiquidIngridient()" class="btn btn-primary">
             +
         </button>
+        <button *ngIf="this.liqCount>1" (click)="deleteLiquidIngridient()" class="btn btn-primary">
+            -
+        </button>
         <table class="table table-hover">
             <thead>
                 <th>Name</th>
                 <th>Amount</th>
             </thead>
             <tbody id="htmlToAddLiquids">
-                <tr id="liqTR">
-                    <td>
-                        <select  class="form-control liqsel" name="Liquids">
-                            <option disabled selected>Select liquid</option>
-                            <option [value]="liq.id" *ngFor="let liq of liquidsList">
-                                {{liq.name}}    
-                            </option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="liqml" type="number" id="quantity" name="quantity" min="1"> ml
-                    </td>
-                </tr>
+                <ng-container *ngFor="let _ of [].constructor(this.liqCount); let i = index">
+                    <tr [id]="'liqTR_' + i">
+                        <td>
+                            <select  class="form-control" name="Liquids" [id]="'liqsel_' + i">
+                                <option disabled selected>Select liquid</option>
+                                <option [value]="liq.id" *ngFor="let liq of liquidsList">
+                                    {{liq.name}}    
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" [id]="'liqml_' + i" name="quantity" min="1" value="50"> ml
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>
@@ -39,25 +44,30 @@
         <button (click)="addDryIngridient()" class="btn btn-primary">
             +
         </button>
-        <table class="table table-hover">
+        <button *ngIf="this.dryCount>0" (click)="deleteDryIngridient()" class="btn btn-primary">
+            -
+        </button>
+        <table  *ngIf="this.dryCount>0" class="table table-hover">
             <thead>
                 <th>Name</th>
                 <th>Amount</th>
             </thead>
             <tbody id="htmlToAddDries">
-                <tr id="dryTR">
-                    <td>
-                        <select  class="form-control drysel" name="dries">
-                            <option disabled selected>Select dry</option>
-                            <option [value]="dry.id" *ngFor="let dry of driesList">
-                                {{dry.name}}    
-                            </option>
-                        </select>
-                    </td>
-                    <td>
-                        <input class="drygr" type="number" id="quantity" name="quantity" min="0"> gr
-                    </td>
-                </tr>
+                <ng-container *ngFor="let _ of [].constructor(this.dryCount); let i = index">
+                    <tr [id]="'dryTR_' + i">
+                        <td>
+                            <select  class="form-control" name="dries" [id]="'drysel_' + i">
+                                <option disabled selected>Select dry</option>
+                                <option [value]="dry.id" *ngFor="let dry of driesList">
+                                    {{dry.name}}    
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number" id="quantity" name="quantity" [id]="'drygr_' + i" min="0" value="50"> gr
+                        </td>
+                    </tr>
+                </ng-container>
             </tbody>
         </table>
     </div>

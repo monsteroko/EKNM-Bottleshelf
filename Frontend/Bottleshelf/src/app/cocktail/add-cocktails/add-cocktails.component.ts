@@ -16,6 +16,9 @@ export class AddEditCocktailsComponent implements OnInit {
 
   driesList = [] as DryModel[];
   liquidsList = [] as LiquidModel[];
+  dryCount : number = 0;
+  liqCount : number = 1;
+
   constructor(private service:CocktailApiService, private dryService:DryApiService, private liqService:LiquidApiService) {
    }
 
@@ -42,15 +45,34 @@ export class AddEditCocktailsComponent implements OnInit {
 
   addCocktail(){
 
-    var cocktail = {
-      name:this.name,
-      description:this.description
+    let dries: {[key:number]:number;}={};
+    let liquids: {[key:number]:number;}={};
+
+    for (var _i = 0; _i < this.dryCount; _i++) {
+      var dryselvalue = (<HTMLSelectElement>document.getElementById("drysel_"+_i)).value;
+      var drynumvalue = (<HTMLSelectElement>document.getElementById("drygr_"+_i)).value;
+      if(dryselvalue && drynumvalue)
+      {
+        dries[Number(dryselvalue)]=Number(drynumvalue); 
+      }
     }
-    const drynamesArr = document.querySelectorAll('.drysel');
-    const drygrArr = document.querySelectorAll('.drygr');
-    const liqnamesArr = document.querySelectorAll('.liqsel');
-    const liqmlArr = document.querySelectorAll('.liqml');
-    this.service.addCocktail(cocktail).subscribe(res => {
+
+    for (var _i = 0; _i < this.liqCount; _i++) {
+      var liqselvalue = (<HTMLSelectElement>document.getElementById("liqsel_"+_i)).value;
+      var liqnumvalue = (<HTMLSelectElement>document.getElementById("liqml_"+_i)).value;
+      if(liqselvalue && liqnumvalue)
+      {
+        liquids[Number(liqselvalue)]=Number(liqnumvalue);
+      }
+    }
+
+    let Addcocktail = {
+      name:this.name,
+      description:this.description,
+      drymap: dries,
+      liqmap: liquids
+    }
+    this.service.addCocktail(Addcocktail).subscribe(res => {
       var closeModalBtn = document.getElementById('add-edit-modal-close');
       if(closeModalBtn){
         closeModalBtn.click();
@@ -69,27 +91,17 @@ export class AddEditCocktailsComponent implements OnInit {
   }
 
   addLiquidIngridient(){
-    let liqtb = document.getElementById("liqTR");
-    let liqtb_prime;
-    if(liqtb)
-    {
-    liqtb_prime = liqtb.cloneNode(true);
-    let htmlToAddLiquids = document.getElementById('htmlToAddLiquids');
-    if(htmlToAddLiquids)
-    htmlToAddLiquids.appendChild(liqtb_prime);
-    }
+    this.liqCount++;
+  }
+  deleteLiquidIngridient(){
+    this.liqCount--;
   }
 
   addDryIngridient(){
-    let drytb = document.getElementById("dryTR");
-    let drytb_prime;
-    if(drytb)
-    {
-    drytb_prime = drytb.cloneNode(true);
-    let htmlToAddDries = document.getElementById('htmlToAddDries');
-    if(htmlToAddDries)
-    htmlToAddDries.appendChild(drytb_prime);
-    }
+    this.dryCount++;
+  }
+  deleteDryIngridient(){
+    this.dryCount--;
   }
 
 }

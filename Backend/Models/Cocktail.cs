@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EKNM_Bottleshelf.Models
 {
-
     /// <summary>
     /// EF Model of cocktail
     /// </summary>
