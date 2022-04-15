@@ -1,6 +1,6 @@
 ﻿namespace EKNM_Bottleshelf.Models
 {
-    public class AddCocktailDTO
+    public class CocktailModifyDTO
     {
         public string Name { get; set; }
         public string? Description { get; set; }

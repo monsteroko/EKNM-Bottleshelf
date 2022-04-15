@@ -209,7 +209,7 @@ namespace EKNM_Bottleshelf.Controllers
         // Add cocktail
         // POST api/Cocktails
         [HttpPost]
-        public async Task<ActionResult<AddCocktailDTO>> AddCocktail(AddCocktailDTO newCocktail)
+        public async Task<ActionResult<CocktailModifyDTO>> AddCocktail(CocktailModifyDTO newCocktail)
         {
             try
             {
@@ -252,7 +252,7 @@ namespace EKNM_Bottleshelf.Controllers
         //Update cocktail
         // PUT api/Cocktails/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<Cocktail>> Put(int id, AddCocktailDTO component)
+        public async Task<ActionResult<Cocktail>> Put(int id, CocktailModifyDTO component)
         {
             try
             {
