@@ -9,23 +9,10 @@
     font-family: Raleway;
     src: url('assets/fonts/Raleway.ttf') format("truetype");
   }
-  
-  @font-face {
-    font-family: Megrim;
-    src: url('assets/fonts/Megrim-Regular.ttf') format("truetype");
-    font-style: regular;
-  }
-  
-  @font-face {
-    font-family: Lemon;
-    src: url('assets/fonts/Lemon Tuesday.otf') format("opentype");
-    font-style: regular;
-  }
-  
+
   @font-face {
     font-family: Comfortaa;
     src: url('assets/fonts/Comfortaa.ttf') format("truetype");
-    font-style: regular;
   }
 p {
     text-decoration: none;
@@ -52,7 +39,7 @@ p {
   h1
   {
     overflow: hidden;
-    font-family: 'Megrim';
+    font-family: 'Comfortaa';
     text-align: center;
     font-weight: regular;
     font-size: 60px;

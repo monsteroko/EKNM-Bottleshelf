@@ -40,12 +40,18 @@ export class ShowDriesComponent implements OnInit {
     const head = [['Name', 'Volume', 'Price']]
     const db = [] as RowInput[]; 
     this.driesToBuy.forEach(element =>{
-      db.push([element.name,element.weight,element.price] as RowInput);
+      db.push([element.name,element.weight+' GR',element.price+' UAH'] as RowInput);
     }
     );
     const doc = new jsPDF();
-    doc.text('Dries to buy',10,10);
+    doc.addFont("../../assets/fonts/Comfortaa.ttf", "Comfortaa", "normal");
+    doc.addFont("../../assets/fonts/AlumniSans.ttf", "AlumniSans", "normal");
+    doc.setFont("Comfortaa");
+    doc.setFontSize(30);
+    doc.text('Dries to buy',60,10);
     autoTable(doc, {
+      theme: 'grid',
+      styles: {font:'AlumniSans', fontSize: 20},
       head: head,
       body : db,
       didDrawCell: (data: { column: { index: any; }; }) => {

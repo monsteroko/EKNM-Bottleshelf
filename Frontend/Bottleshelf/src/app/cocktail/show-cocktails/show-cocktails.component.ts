@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
 import {Sort} from '@angular/material/sort';
+import jsPDF from 'jspdf';
+import autoTable, { RowInput } from 'jspdf-autotable';
 
 interface Size {
   value: number;
@@ -72,6 +74,31 @@ export class ShowCocktailsComponent implements OnInit {
           return 0;
       }
     });
+  }
+
+  formMenu(){
+    const head = [['Name', 'Description', 'Volume']]
+    const db = [] as RowInput[]; 
+    this.cocktailsList.forEach(element =>{
+      db.push([element.name,element.description,element.volumeML+' ML'] as RowInput);
+    }
+    );
+    const doc = new jsPDF()
+    doc.addFont("../../assets/fonts/Comfortaa.ttf", "Comfortaa", "normal");
+    doc.addFont("../../assets/fonts/AlumniSans.ttf", "AlumniSans", "normal");
+    doc.setFont("Comfortaa");
+    doc.setFontSize(30);
+    doc.text('EKNM menu',80,10);
+    autoTable(doc, {
+      theme: 'grid',
+      styles: {font:'AlumniSans', fontSize: 20},
+      head: head,
+      body :db,
+      didDrawCell: (data: { column: { index: any; }; }) => {
+        console.log(data.column.index)
+      },
+      },)
+    doc.output('dataurlnewwindow');
   }
 
   deleteCocktail(item:CocktailModel){
