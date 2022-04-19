@@ -9,8 +9,6 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  main = '../../assets/logohd.png';
-  second = '../../assets/logohd_selected.png';
   constructor(private router: Router) { }
 
   ngOnInit(): void {
