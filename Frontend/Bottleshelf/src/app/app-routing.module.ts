@@ -4,6 +4,12 @@ import { ShowLiquidsComponent } from './liquid/show-liquids/show-liquids.compone
 import { ShowDriesComponent } from './dry/show-dries/show-dries.component';
 import { ShowCocktailsComponent } from './cocktail/show-cocktails/show-cocktails.component';
 import { HomeComponent } from './home/home.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AuthGuard } from './guard/auth.guard';
 
 const routes: Routes = [
 { path: '', component: HomeComponent },
@@ -11,6 +17,12 @@ const routes: Routes = [
 { path: 'liquids', component: ShowLiquidsComponent},
 { path: 'dries', component: ShowDriesComponent},
 { path: 'cocktails', component: ShowCocktailsComponent},
+{ path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]  },
+{ path: 'sign-in', component: SignInComponent },
+{ path: 'register-user', component: SignUpComponent },
+{ path: 'dashboard', component: DashboardComponent },
+{ path: 'forgot-password', component: ForgotPasswordComponent },
+{ path: 'verify-email-address', component: VerifyEmailComponent },
 ];
 
 @NgModule({

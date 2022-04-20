@@ -14,7 +14,7 @@
         Form Menu
     </button>
     <!-- Add cocktail trigger modal -->
-        <button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#addCocktail" (click)="AddCocktail()">
+        <button type="button" *ngIf="authService.userData as user" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#addCocktail" (click)="AddCocktail()">
             Add Cocktail
         </button>
     <table matSort (matSortChange)="sortData($event)" class="table table-hover table-dark">
@@ -22,13 +22,13 @@
             <th mat-sort-header="name">Name</th>
             <th mat-sort-header="volume">Volume</th>
             <th mat-sort-header="description">Description</th>
-            <th>Options</th>
+            <th *ngIf="authService.userData as user">Options</th>
         </tr>
         <tr *ngFor="let item of sortedData">
             <td>{{item.name}}</td>
             <td>{{item.volumeML}} ml</td>
             <td>{{item.description}}</td>
-            <td>
+            <td *ngIf="authService.userData as user">
                 <!-- Cocktail details trigger modal -->
                 <button class="btn btn-outline-primary me-2 mb-1" (click)="modalDetails(item)" data-bs-toggle="modal" data-bs-target="#detailsCocktail">
                     Details

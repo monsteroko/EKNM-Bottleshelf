@@ -20,6 +20,21 @@ import { HomeComponent } from './home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UpdateCocktailsComponent } from './cocktail/update-cocktails/update-cocktails.component';
 
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { environment } from 'src/environments/environment';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import { AuthService } from "./services/auth.service";
+
+import { AuthGuard } from './guard/auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +47,12 @@ import { UpdateCocktailsComponent } from './cocktail/update-cocktails/update-coc
     AddEditCocktailsComponent,
     CocktailDetailsComponent,
     HomeComponent,
-    UpdateCocktailsComponent
+    UpdateCocktailsComponent,
+    DashboardComponent,
+    SignInComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent
   ],
   imports: [
     BrowserModule,
@@ -42,9 +62,15 @@ import { UpdateCocktailsComponent } from './cocktail/update-cocktails/update-coc
     MatSortModule,
     MatSelectModule,
     ReactiveFormsModule,
-    NoopAnimationsModule
+    NoopAnimationsModule,
+
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule,
+    AngularFirestoreModule,
+    AngularFireStorageModule,
+    AngularFireDatabaseModule,
   ],
-  providers: [DryApiService, LiquidApiService],
+  providers: [DryApiService, LiquidApiService, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

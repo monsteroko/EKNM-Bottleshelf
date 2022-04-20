@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DryApiService } from 'src/app/services/dry-api.service';
 import { DryModel } from 'src/models/dry.model';
 import {Sort} from '@angular/material/sort';
+import { AuthService } from '../../services/auth.service';
 import jsPDF from 'jspdf';
 import autoTable, { RowInput } from 'jspdf-autotable';
 
@@ -16,7 +17,7 @@ export class ShowDriesComponent implements OnInit {
   sortedData = [] as DryModel[];
   driesToBuy = [] as DryModel[];
 
-  constructor(private service:DryApiService) {}
+  constructor(private service:DryApiService, public authService: AuthService) {}
 
   ngOnInit(): void {
     this.service.getDriesList().toPromise().then(data => { 

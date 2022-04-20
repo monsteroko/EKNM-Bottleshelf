@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CocktailApiService } from 'src/app/services/cocktail-api.service';
 import { CocktailModel } from 'src/models/cocktail.model';
 import {Sort} from '@angular/material/sort';
+import { AuthService } from '../../services/auth.service';
 import jsPDF from 'jspdf';
 import autoTable, { RowInput } from 'jspdf-autotable';
 
@@ -22,7 +23,7 @@ export class ShowCocktailsComponent implements OnInit {
   sortedData = [] as CocktailModel[];
 
 
-  constructor(private service:CocktailApiService) { }
+  constructor(private service:CocktailApiService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.service.getCocktailsList().toPromise().then(data => { 

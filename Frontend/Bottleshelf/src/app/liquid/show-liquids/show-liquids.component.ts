@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LiquidApiService } from 'src/app/services/liquid-api.service';
 import { LiquidModel } from 'src/models/liquid.model';
 import {Sort} from '@angular/material/sort';
+import { AuthService } from '../../services/auth.service';
 import jsPDF from 'jspdf';
 import autoTable, { RowInput } from 'jspdf-autotable';
 
@@ -17,7 +18,7 @@ export class ShowLiquidsComponent implements OnInit {
   sortedData = [] as LiquidModel[];
   liquidsToBuy = [] as LiquidModel[];
 
-  constructor(private service:LiquidApiService) { }
+  constructor(private service:LiquidApiService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.service.getLiquidsList().toPromise().then(data => { 

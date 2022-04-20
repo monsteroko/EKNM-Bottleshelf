@@ -37,3 +37,11 @@
   </div>
   </div>
 </nav>
+<div class="row" *ngIf="authService.userData as user">
+    <img class="" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
+      alt="{{user.displayName}}">
+<h2>Hello, <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h2>
+<a class="nav-link" (click)="authService.SignOut()">
+  <i class="fas fa-sign-out-alt"></i>Log out
+</a>
+</div>
