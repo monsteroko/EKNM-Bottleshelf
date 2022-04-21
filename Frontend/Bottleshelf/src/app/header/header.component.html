@@ -37,11 +37,29 @@
   </div>
   </div>
 </nav>
-<div class="row" *ngIf="authService.userData as user">
-    <img class="" src="{{(user.photoURL) ? user.photoURL : '/assets/dummy-user.png'}}"
-      alt="{{user.displayName}}">
-<h2>Hello, <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h2>
-<a class="nav-link" (click)="authService.SignOut()">
-  <i class="fas fa-sign-out-alt"></i>Log out
-</a>
+<div class="card text-white bg-dark mb-3" style="max-width: 10rem;" *ngIf="authService.userData as user">
+  <div class="card-body">
+    <h5 class="card-title">Hello, <strong>{{(user.displayName) ? user.displayName : 'User'}}</strong>!</h5>
+    <button (click)="authService.SignOut()" class="btn btn-primary">Log out</button>
+  </div>
+</div>
+<div class="card text-white bg-dark mb-3" style="max-width: 8rem;" *ngIf="!authService.userData as user">
+<button type="button" class="btn btn-primary float-end m-2" data-bs-toggle="modal" data-bs-target="#login" (click)="modalLogin()">
+    Login
+</button>
+</div>
+<!-- Login Modal -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="loginLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="loginLabel">Login</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            (click)="modalLoginClose()" id="add-edit-modal-close"></button>
+      </div>
+      <div class="modal-body">
+        <app-sign-in *ngIf="activateLoginComponent"></app-sign-in>
+      </div>
+    </div>
+  </div>
 </div>

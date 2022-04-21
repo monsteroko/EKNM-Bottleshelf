@@ -10,4 +10,12 @@ export class SignInComponent implements OnInit {
     public authService: AuthService
   ) { }
   ngOnInit() { }
+
+  signIn(name:any,password:any){
+    this.authService.SignIn(name, password);
+    var closeModalBtn = document.getElementById('add-edit-modal-close');
+    if(closeModalBtn){
+      closeModalBtn.click();
+    }
+  }
 }

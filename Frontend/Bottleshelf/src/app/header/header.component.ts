@@ -10,9 +10,17 @@ import { AuthService } from "../services/auth.service";
 })
 export class HeaderComponent implements OnInit {
 
+  activateLoginComponent:boolean = false;
+
   constructor(private router: Router, public authService: AuthService) { }
 
   ngOnInit(): void {
+  }
+  modalLogin() {
+    this.activateLoginComponent = true;
+  }
+  modalLoginClose() {
+    this.activateLoginComponent = false;
   }
   navigateToCocktails() {
     this.router.navigate(['/cocktails']);
