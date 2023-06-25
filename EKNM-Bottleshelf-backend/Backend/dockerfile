@@ -14,6 +14,7 @@ RUN dotnet publish --use-current-runtime --self-contained false --no-restore -o 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app
 COPY --from=build /app .
-EXPOSE 4200
-ENV ASPNETCORE_URLS=http://+:4200
-ENTRYPOINT ["dotnet", "Backend.dll"]
+EXPOSE 5001
+ENV DOTNET_URLS=http://+:5000
+ENV ASPNETCORE_URLS=http://+:5000
+ENTRYPOINT ["dotnet", "Backend.dll", "--server.urls", "http://+:5000;https://+:5001"]
