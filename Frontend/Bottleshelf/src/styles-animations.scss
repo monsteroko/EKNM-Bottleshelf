@@ -1,0 +1,31 @@
+@-webkit-keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.fade-in-image {
+    -webkit-animation: fade-in-image 0.4s ease-in both;
+    animation: fade-in-image 0.4s ease-in both;
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+    
+}
+
+.fade-in {
+    -webkit-animation: fade-in 0.4s ease-in both;
+    animation: fade-in 0.4s ease-in both;
+    -webkit-animation-delay: 0.1s;
+    animation-delay: 0.1s;
+}

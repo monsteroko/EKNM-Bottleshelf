@@ -1,0 +1,63 @@
+.eknm-button-small {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-family: "Raleway";
+    font-size: 1.25rem;
+    border-radius: 360px;
+    color: $color-white-bright;
+    background-color: none;
+    border: solid $color-white-bright;
+    border-width: 1px;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+}
+
+.eknm-button-small:hover {
+    color: $color-white-bright;
+    background-color: $color-gray-medium;
+}
+
+.eknm-button-small:active {
+    color: $color-white-bright;
+    background-color: $color-gray-dark;
+}
+
+.eknm-button-underlined {
+    justify-content: center;
+    align-items: center;
+    font-family: "Raleway";
+    font-size: 1.25rem;
+    color: $color-white;
+}
+
+.eknm-button-underlined:hover {
+    color: $color-white;
+    text-decoration-color: $color-purple-bright;
+}
+
+.eknm-button-underlined:active {
+    color: $color-white;
+}
+
+.nav-button{   
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Raleway';
+    position: relative;
+    font-size: 45px;
+    border: None;
+    background-color: transparent;
+    color: $color-white;
+    text-transform: uppercase;
+    height: 40px;
+    font-weight: lighter;
+    transition-duration: 0.2s;
+  }
+  .nav-button:hover{ 
+    color: $color-white-bright;
+  }
+  .nav-button:active {
+    color: $color-white-bright;
+  }
