@@ -1,6 +1,3 @@
-@import './styles-animations.css';
-@import './styles-buttons.css';
-
 $color-white-bright: #ecf2f4;
 $color-white: #c6cbce;
 $color-purple-bright: #a668d9;
@@ -9,6 +6,8 @@ $color-purple-dark: #240046;
 $color-gray-medium: #33312d;
 $color-gray-dark: #262522;
 
+@import './styles-animations.scss';
+@import './styles-buttons.scss';
 
 @font-face {
     font-family: Raleway;
