@@ -19,6 +19,7 @@ import { CocktailDetailsComponent } from './cocktail/cocktail-details/cocktail-d
 import { HomeComponent } from './home/home.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UpdateCocktailsComponent } from './cocktail/update-cocktails/update-cocktails.component';
+import { UnsignedPageComponent } from './pages/unsigned-page/unsigned-page.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UpdateCocktailsComponent } from './cocktail/update-cocktails/update-coc
     AddEditCocktailsComponent,
     CocktailDetailsComponent,
     HomeComponent,
-    UpdateCocktailsComponent
+    UpdateCocktailsComponent,
+    UnsignedPageComponent
   ],
   imports: [
     BrowserModule,
