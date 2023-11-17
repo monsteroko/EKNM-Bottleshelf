@@ -1,0 +1,17 @@
+.gradient-down {
+    height: 8rem;
+    background: linear-gradient($color-almost-black, $color-almost-black-translucent);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: overlay;
+}
+
+.gradient-up {
+    height: 8rem;
+    background: linear-gradient($color-almost-black-translucent, $color-almost-black);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-blend-mode: overlay;
+}

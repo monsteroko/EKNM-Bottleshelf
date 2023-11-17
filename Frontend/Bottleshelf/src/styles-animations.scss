@@ -1,3 +1,36 @@
+@-webkit-keyframes fade-in-image {
+    0% {
+        background: $color-almost-black;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+    }
+    100% {
+        background: url('/assets/bg2.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+    }
+}
+@keyframes fade-in-image {
+    0% {
+        background: $color-almost-black;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+    }
+    100% {
+        background: url("/assets/bg2.jpg");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-blend-mode: overlay;
+    }
+}
+
 @-webkit-keyframes fade-in {
     0% {
         opacity: 0;

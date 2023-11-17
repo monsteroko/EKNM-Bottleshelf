@@ -5,13 +5,22 @@ $color-purple-middle: #5a189a;
 $color-purple-dark: #240046;
 $color-gray-medium: #33312d;
 $color-gray-dark: #262522;
+$color-almost-black: #100f0d;
+$color-almost-black-translucent: #100f0dcf;
 
 @import './styles-animations.scss';
 @import './styles-buttons.scss';
+@import './styles-gradients.scss';
 
 @font-face {
     font-family: Raleway;
     src: url('assets/fonts/Raleway.ttf') format("truetype");
+}
+
+@font-face {
+  font-family: Raleway-Black;
+  src: url("assets/fonts/Raleway.ttf") format("truetype");
+  font-weight: 900;
 }
 
 @font-face {
@@ -40,10 +49,9 @@ p {
   
 h1 {
   overflow: hidden;
-  font-family: 'Raleway';
+  font-family: 'Raleway-Black';
   text-align: center;
-  font-weight: regular;
-  font-size: 2rem;
+  font-size: 3rem;
   color: $color-white-bright;
   text-align: center;
   text-transform: uppercase;
@@ -55,10 +63,18 @@ h2 {
   font-weight: bold;
   position: relative;
   margin: 0;
+  font-size: 2rem;
+  color: $color-white-bright;
+  text-transform: uppercase;
+}
+
+h3 {
+  text-decoration: none;
+  font-family: 'Raleway';
+  position: relative;
+  margin: 0;
   font-size: 1.5rem;
   color: $color-white-bright;
-  text-align: justify;
-  text-transform: uppercase;
 }
   
 .img-icon {
@@ -84,14 +100,6 @@ h2 {
   margin-left: auto;
   max-width: 900px;
   padding: 0px 40px 0px 40px;
-}
-
-html, body { height: 100%; }
-body { 
-  margin: 0; 
-  font-family: Roboto, "Helvetica Neue", sans-serif; 
-  background-image: url(assets/bg.png);
-  background-size: 200% 200%;
 }
 
 ul li::marker {
@@ -127,13 +135,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   width: 100%;
 }
 
+.container-narrow {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 30rem;
+  padding: 0rem 2rem 0rem 2rem;
+  width: 100%;
+}
+
 .full-width {
   width: 100%;
-  background-color: #100f0dff;
+  background-color: $color-almost-black;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.full-page {
+  height: 100vh;
+  width: 100vw;
 }
 
 .blackBG {
-  background-color: #100f0d;
+  background-color: $color-almost-black;
+}
+
+.background-overlay {
+  background-color: $color-almost-black-translucent;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-blend-mode: overlay;
 }
 
 @media only screen and (min-width: 700px) {
